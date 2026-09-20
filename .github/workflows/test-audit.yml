@@ -1,11 +1,20 @@
-name: Test Audit
+name: test-audit
 
 on:
   push:
     branches: [main]
+    paths:
+      - "**/*.py"
   pull_request:
-    branches: [main]
+    paths:
+      - "**/*.py"
+
+permissions:
+  contents: read
 
 jobs:
-  audit:
+  audit-markers:
     uses: dataciviclab/.github/.github/workflows/test-audit-reusable.yml@main
+    with:
+      test-dirs: "tests"
+      extra-packages: "pytest pyyaml"

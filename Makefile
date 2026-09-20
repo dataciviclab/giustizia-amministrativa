@@ -61,7 +61,7 @@ registry:
 	$(TOOLKIT) registry build
 
 registry-write:
-	$(TOOLKIT) registry build --prefix giustizia_amministrativa --write
+	$(TOOLKIT) registry build --prefix giustizia-amministrativa --write
 
 .PHONY: help
 help:

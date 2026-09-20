@@ -9,6 +9,7 @@ Supported types:
   - ricorsi-definiti: Ricorsi definiti per classificazione ed esito (31 sedi)
   - ricorsi-pervenuti-class: Ricorsi pervenuti per classificazione (31 sedi)
   - provvedimenti: Provvedimenti pubblicati (31 sedi)
+  - ricorsi-pendenti: Ricorsi pendenti per periodo (solo CdS)
 
 Usage:
     python prefetch.py output.csv                          # default: ricorsi-appalto
@@ -56,6 +57,11 @@ DATASET_TYPES = {
         "suffix": "provvedimenti-pubblicati",
         "year_col": "ANNO_PUBBLICAZIONE",
     },
+    "ricorsi-pendenti": {
+        "suffix": "ricorsi-pendenti-per-periodo",
+        "year_col": "ANNO_MESE_RIFERIMENTO",
+        "cds_only": True,
+    },
 }
 
 SEDI = [
@@ -72,6 +78,8 @@ SEDI = [
     "tar-umbria", "tar-valle-d-aosta", "tar-veneto",
     "trga-bolzano", "trga-trento",
 ]
+
+# Note: ricorsi-pendenti is CdS-only (not all 31 sedi)
 
 
 def fetch_csv_urls(dataset_id: str) -> list[str]:
@@ -101,7 +109,10 @@ def main():
     all_rows: list[dict] = []
     fieldnames: list[str] | None = None
 
-    for i, src_slug in enumerate(SEDI):
+    # For cds_only types, only process CdS
+    sources_to_process = ["cds"] if ds_config.get("cds_only") else SEDI
+
+    for i, src_slug in enumerate(sources_to_process):
         ds_id = f"{src_slug}-{ds_config['suffix']}"
         print(f"[{i+1}/{len(SEDI)}] {src_slug}...", end=" ", flush=True)
 
@@ -135,7 +146,7 @@ def main():
             print(f"ERROR: {e}")
 
     if args.dry_run:
-        print(f"\nWould concatenate {len(SEDI)} sources into {args.output}")
+        print(f"\nWould concatenate {len(sources_to_process)} sources into {args.output}")
         return
 
     if not all_rows:

@@ -1,0 +1,87 @@
+root: ../../out
+schema_version: 1
+
+dataset:
+  name: ga_cross
+  source_id: dataciviclab_composite
+  tags: [giustizia, ga, compose, cross]
+  category: giustizia
+  description: "Compose GA: flusso ricorsi pervenuti → definiti per sede/classificazione/anno. Visione d'insieme della giustizia amministrativa italiana."
+  years: [2026]
+  time_coverage:
+    mode: snapshot
+
+# Compose: unisce i clean dei dataset GA a livello aggregato.
+# Eseguire prima: toolkit run per tutti i dataset singoli in datasets/.
+
+raw:
+  output_policy: overwrite
+  sources:
+    - name: pervenuti
+      type: local_file
+      args:
+        path: "../../out/data/clean/ga_ricorsi_pervenuti_class/2026/ga_ricorsi_pervenuti_class_2026_clean.parquet"
+        filename: pervenuti.parquet
+      primary: true
+
+support:
+  - type: dataset
+    name: definiti
+    config: ../../datasets/ga-ricorsi-definiti/dataset.yml
+    years: [2026]
+  - type: dataset
+    name: sentenze
+    config: ../../datasets/ga-sentenze/dataset.yml
+    years: [2026]
+  - type: dataset
+    name: provvedimenti
+    config: ../../datasets/ga-provvedimenti/dataset.yml
+    years: [2026]
+
+clean:
+  sql: "sql/clean.sql"
+  read:
+    source: config_only
+    mode: latest
+  required_columns:
+    - anno
+    - codice_sede
+    - nome_sede
+    - classificazione_ricorso
+    - pervenuti
+    - definiti
+    - sentenze
+    - accoglimenti
+    - rigetti
+  validate:
+    not_null:
+      - anno
+      - codice_sede
+    min_rows: 100
+
+mart:
+  tables:
+    - name: mart_panoramica
+      sql: "sql/mart_panoramica.sql"
+    - name: mart_sede_flusso
+      sql: "sql/mart_sede_flusso.sql"
+    - name: mart_esiti
+      sql: "sql/mart_esiti.sql"
+  required_tables:
+    - mart_panoramica
+    - mart_sede_flusso
+    - mart_esiti
+  validate:
+    table_rules:
+      mart_panoramica:
+        min_rows: 1
+      mart_sede_flusso:
+        min_rows: 50
+      mart_esiti:
+        min_rows: 10
+
+duckdb:
+  memory_limit: "2GB"
+
+validation:
+  fail_on_error: true

@@ -1,0 +1,11 @@
+name: Test Audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  audit:
+    uses: dataciviclab/.github/.github/workflows/test-audit-reusable.yml@main

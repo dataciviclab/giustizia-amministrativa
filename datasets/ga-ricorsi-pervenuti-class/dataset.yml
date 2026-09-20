@@ -1,0 +1,74 @@
+root: ../../out
+schema_version: 1
+
+dataset:
+  name: ga_ricorsi_pervenuti_class
+  source_id: openga
+  tags: [giustizia, giustizia-amministrativa, contenzioso]
+  category: giustizia
+  years:
+  - 2026
+  time_coverage:
+    start_year: 2017
+    end_year: 2026
+
+raw:
+  output_policy: overwrite
+  sources:
+  - name: openga
+    type: script
+    args:
+      command: "python ../../prefetch.py raw_input.csv --type ricorsi-pervenuti-class"
+      output: raw_input.csv
+      filename: raw_input.csv
+    primary: true
+
+clean:
+  read:
+    source: auto
+    mode: all
+    delim: ","
+    encoding: utf-8
+    header: true
+  required_columns:
+  - anno
+  - anno_mese
+  - codice_sede
+  - nome_sede
+  - classificazione_ricorso
+  - numero_ricorsi
+  sql: sql/clean.sql
+  validate:
+    min_rows: 100
+    not_null:
+    - anno
+    - numero_ricorsi
+
+mart:
+  tables:
+  - name: mart_pervenuti_per_sede
+    sql: sql/mart_sede.sql
+  - name: mart_pervenuti_per_tipo
+    sql: sql/mart_tipo.sql
+  required_tables:
+  - mart_pervenuti_per_sede
+  validate:
+    table_rules:
+      mart_pervenuti_per_sede:
+        required_columns:
+          - anno
+          - codice_sede
+          - nome_sede
+          - totale
+        primary_key: [anno, codice_sede, nome_sede]
+        min_rows: 5
+      mart_pervenuti_per_tipo:
+        required_columns:
+          - anno
+          - classificazione_ricorso
+          - totale
+        primary_key: [anno, classificazione_ricorso]
+        min_rows: 5
+
+validation:
+  fail_on_error: true

@@ -17,6 +17,7 @@ jobs:
     with:
       repo-slug: "giustizia-amministrativa"
       run-command: "make run-all"
+      extra-env: "TOOLKIT_ALLOW_SCRIPT_SOURCE=1"
     permissions:
       contents: write
       pull-requests: write

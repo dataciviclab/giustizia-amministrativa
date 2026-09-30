@@ -153,7 +153,7 @@ if not df_sedi.empty:
                 "definiti": "Definiti",
                 "tasso_accoglimento": "Tasso accoglimento %",
             }),
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
         )
 

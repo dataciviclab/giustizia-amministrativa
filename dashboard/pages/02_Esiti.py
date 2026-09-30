@@ -70,7 +70,7 @@ with col_right:
             "esito_provvedimento": "Esito",
             "totale": "N. ricorsi",
         }),
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
     )
 
@@ -167,7 +167,7 @@ if not df_materie_all.empty:
                     "rigetti": "Rigetti",
                     "tasso_accoglimento": "Tasso %",
                 }),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
             )
 

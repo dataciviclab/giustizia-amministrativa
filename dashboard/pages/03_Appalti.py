@@ -130,7 +130,7 @@ if not df_gare.empty:
             "denominazione_amministrazione_appaltante": "Appaltante",
             "provincia": "Prov.",
         }),
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
     )
 

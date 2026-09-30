@@ -114,7 +114,7 @@ if not df_materie_sede.empty:
                 "rigetti": "Rigetti",
                 "tasso_accoglimento": "Tasso %",
             }),
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
         )
 

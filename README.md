@@ -52,13 +52,14 @@ Dashboard Streamlit multi-pagina (`dashboard/`), pronta a leggere i clean/mart d
 
 | Livello | Pagina | Contenuto |
 |---|---|---|
-| **Monitoraggio** | Panoramica | Trend nazionale, volumi per anno, tasso definizione |
-| **Intelligence** | Esiti | Tasso accoglimento per materia e sede, trend |
+| **Monitoraggio** | Panoramica | Trend nazionale, volumi, tasso definizione, quota brevi |
+| **Intelligence** | Esiti | Tasso accoglimento per materia e sede, quota sentenze brevi |
+| | Mezzi di Definizione | Sentenza vs decreto decisori vs altri (compose `ga_definizioni`) |
 | | Appalti | Contenzioso sugli appalti (CIG) |
 | **Esplorazione** | Scheda Sede | Profilo completo di ogni sede |
 | | Query SQL | Query libera sui dataset del registry |
 
-> I nuovi dataset (`ga_pareri`, `ga_sentenze_brevi`, `ga_ricorsi_tipo_decisione`) e il compose `ga_definizioni` non sono ancora collegati alle pagine: wiring dashboard in una PR dedicata.
+> Dataset `ga_pareri` e `ga_sentenze_brevi` sono interrogabili via Query SQL; le pagine analitiche usano i compose (`ga_cross`, `ga_definizioni`) che li aggregano.
 
 ## Come si usa
 

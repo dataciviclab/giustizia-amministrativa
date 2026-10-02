@@ -26,12 +26,17 @@ if df_year.empty:
     st.stop()
 
 row = df_year.iloc[0]
-k1, k2, k3, k4, k5 = st.columns(5)
-k1.metric("Ricorsi pervenuti", fmt_num(row["totale_pervenuti"]))
-k2.metric("Ricorsi definiti", fmt_num(row["totale_definiti"]))
-k3.metric("Tasso definizione", fmt_pct(row["tasso_definizione"], signed=False))
-k4.metric("Tasso accoglimento", fmt_pct(row["tasso_accoglimento"], signed=False))
-k5.metric("Sedi attive", fmt_num(row["n_sedi"]))
+has_brevi = "quota_brevi_pct" in df_year.columns and pd.notna(row.get("quota_brevi_pct"))
+cols = st.columns(6 if has_brevi else 5)
+cols[0].metric("Ricorsi pervenuti", fmt_num(row["totale_pervenuti"]))
+cols[1].metric("Ricorsi definiti", fmt_num(row["totale_definiti"]))
+cols[2].metric("Tasso definizione", fmt_pct(row["tasso_definizione"], signed=False))
+cols[3].metric("Tasso accoglimento", fmt_pct(row["tasso_accoglimento"], signed=False))
+if has_brevi:
+    cols[4].metric("Quote brevi", fmt_pct(row["quota_brevi_pct"], signed=False))
+    cols[5].metric("Sedi attive", fmt_num(row["n_sedi"]))
+else:
+    cols[4].metric("Sedi attive", fmt_num(row["n_sedi"]))
 
 st.markdown("---")
 

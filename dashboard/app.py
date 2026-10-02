@@ -22,6 +22,7 @@ pages = {
     ],
     "Analisi": [
         st.Page("pages/02_Esiti.py", title="Esiti Ricorsi", icon="⚖️"),
+        st.Page("pages/06_Mezzi_Definizione.py", title="Mezzi di Definizione", icon="⚙️"),
         st.Page("pages/03_Appalti.py", title="Appalti Pubblici", icon="🏗️"),
         st.Page("pages/04_Scheda_Sede.py", title="Scheda Sede", icon="🏛️"),
     ],

@@ -1,0 +1,92 @@
+root: ../../out
+schema_version: 1
+
+dataset:
+  name: ga_definizioni
+  source_id: dataciviclab_composite
+  tags: [giustizia, ga, compose, definizioni, mezzi]
+  category: giustizia
+  description: "Compose GA: come si definiscono i ricorsi per sede/anno — mix sentenza vs decreto decisori vs altri provvedimenti, con contesto esiti (ricorsi_definiti) e mix sentenze brevi. Grano sede×anno, NON materia."
+  years: [2026]
+  time_coverage:
+    mode: snapshot
+
+# Complementare a ga_cross (che resta al grano materia).
+# Eseguire prima: toolkit run per i dataset singoli in datasets/.
+
+raw:
+  output_policy: overwrite
+  sources:
+    - name: tipo_decisione
+      type: local_file
+      args:
+        path: "../../out/data/clean/ga_ricorsi_tipo_decisione/2026/ga_ricorsi_tipo_decisione_2026_clean.parquet"
+        filename: tipo_decisione.parquet
+      primary: true
+
+support:
+  - type: dataset
+    name: definiti
+    config: ../../datasets/ga-ricorsi-definiti/dataset.yml
+    years: [2026]
+  - type: dataset
+    name: sentenze_brevi
+    config: ../../datasets/ga-sentenze-brevi/dataset.yml
+    years: [2026]
+
+clean:
+  sql: "sql/clean.sql"
+  read:
+    source: config_only
+    mode: latest
+  required_columns:
+    - anno
+    - codice_sede
+    - nome_sede
+    - definiti_sentenza_breve
+    - definiti_decreto_decisori
+    - definiti_altri
+    - totale_definiti
+  validate:
+    not_null:
+      - anno
+      - codice_sede
+    min_rows: 50
+
+mart:
+  tables:
+    - name: mart_mezzi_anno
+      sql: "sql/mart_mezzi_anno.sql"
+    - name: mart_sintesi_sede
+      sql: "sql/mart_sintesi_sede.sql"
+    - name: mart_outlier_sedi
+      sql: "sql/mart_outlier_sedi.sql"
+  required_tables:
+    - mart_mezzi_anno
+    - mart_sintesi_sede
+  validate:
+    table_rules:
+      mart_mezzi_anno:
+        required_columns:
+          - anno
+          - totale_definiti
+          - sentenza_pct
+        primary_key: [anno]
+        min_rows: 1
+      mart_sintesi_sede:
+        required_columns:
+          - anno
+          - codice_sede
+          - nome_sede
+          - totale_definiti
+          - sentenza_pct
+        primary_key: [anno, codice_sede]
+        min_rows: 5
+      mart_outlier_sedi:
+        min_rows: 1
+
+duckdb:
+  memory_limit: "2GB"
+
+validation:
+  fail_on_error: true

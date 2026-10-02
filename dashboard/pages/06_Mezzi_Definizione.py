@@ -12,6 +12,9 @@ from sources import (
     load_definizioni_mezzi_anno,
     load_definizioni_outlier,
     load_definizioni_sintesi_sede,
+    query_pareri,
+    query_sentenze_brevi,
+    query_tipo_decisione,
 )
 
 st.title("⚙️ Mezzi di definizione")
@@ -224,6 +227,100 @@ if not df_out.empty:
                 "decreto_pct": "% decreto",
                 "delta_decreto_pct": "Δ decreto pp",
                 "quota_brevi_pct": "% brevi",
+            }),
+            width="stretch",
+            hide_index=True,
+        )
+
+# ── Drill-down dataset grezzi ──────────────────────────────────────
+st.markdown("---")
+st.subheader(f"Drill-down dataset grezzi — {year}")
+st.caption(
+    "Stesse fonti dei compose, in forma grezza: tipo decisione (aggregato sede×mese), "
+    "sentenze brevi (aggregato materia×tipo), pareri consultivi (record-level). "
+    "Per query libere usa la pagina Query SQL."
+)
+
+with st.expander("Tipo di decisione — top sedi per meccanismo", expanded=False):
+    df_td = query_tipo_decisione(f"""
+        SELECT
+            nome_sede,
+            SUM(definiti_sentenza_breve) AS sentenza,
+            SUM(definiti_decreto_decisori) AS decreti,
+            SUM(definiti_altri) AS altri,
+            SUM(totale_definiti) AS totale
+        FROM clean_input
+        WHERE anno = {year}
+        GROUP BY nome_sede
+        ORDER BY totale DESC
+        LIMIT 15
+    """, year)
+    if df_td.empty:
+        st.info("Nessun dato per questo anno.")
+    else:
+        st.dataframe(
+            df_td.rename(columns={
+                "nome_sede": "Sede",
+                "sentenza": "Con sentenza",
+                "decreti": "Con decreto",
+                "altri": "Altri",
+                "totale": "Totale",
+            }),
+            width="stretch",
+            hide_index=True,
+        )
+
+with st.expander("Sentenze brevi — materie con più volume", expanded=False):
+    df_sb = query_sentenze_brevi(f"""
+        SELECT
+            classificazione_ricorso,
+            SUM(CASE WHEN tipo_sentenza ILIKE '%BREVE%' THEN numero_sentenze ELSE 0 END) AS brevi,
+            SUM(CASE WHEN tipo_sentenza = 'SENTENZA' THEN numero_sentenze ELSE 0 END) AS piene,
+            SUM(numero_sentenze) AS totale
+        FROM clean_input
+        WHERE anno = {year} AND classificazione_ricorso IS NOT NULL
+        GROUP BY classificazione_ricorso
+        ORDER BY totale DESC
+        LIMIT 15
+    """, year)
+    if df_sb.empty:
+        st.info("Nessun dato per questo anno.")
+    else:
+        df_sb["pct_brevi"] = (df_sb["brevi"] * 100 / df_sb["totale"].replace(0, pd.NA)).astype(float).round(1)
+        st.dataframe(
+            df_sb.rename(columns={
+                "classificazione_ricorso": "Materia",
+                "brevi": "Brevi",
+                "piene": "Piene",
+                "totale": "Totale",
+                "pct_brevi": "% brevi",
+            }),
+            width="stretch",
+            hide_index=True,
+        )
+
+with st.expander("Pareri consultivi — esiti (CdS + CGA)", expanded=False):
+    df_pr = query_pareri(f"""
+        SELECT
+            nome_sede,
+            tipo_provvedimento,
+            esito_provvedimento,
+            COUNT(*) AS n
+        FROM clean_input
+        WHERE anno = {year}
+        GROUP BY 1, 2, 3
+        ORDER BY n DESC
+        LIMIT 20
+    """, year)
+    if df_pr.empty:
+        st.info("Nessun dato per questo anno.")
+    else:
+        st.dataframe(
+            df_pr.rename(columns={
+                "nome_sede": "Sede",
+                "tipo_provvedimento": "Tipo parere",
+                "esito_provvedimento": "Esito",
+                "n": "N.",
             }),
             width="stretch",
             hide_index=True,

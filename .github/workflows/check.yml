@@ -5,6 +5,8 @@ on:
     paths:
       - "datasets/**"
       - "compose/**"
+      - "dashboard/**"
+      - "registry/**"
       - "**/*.py"
       - "**/*.yml"
       - "**/*.yaml"
@@ -35,3 +37,17 @@ jobs:
       install: "pip install -e .\"[dev]\""
       configs: ${{ needs.detect.outputs.dirs }}
       years: "from-config"
+
+  # Smoke dashboard: solo stdlib + pytest (py_compile/ast/registry.json).
+  # Non richiede streamlit — gira anche sulle PR senza dati clean.
+  dashboard-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pytest
+        run: pip install pytest
+      - name: Dashboard smoke + registry contract
+        run: python -m pytest dashboard/tests -q

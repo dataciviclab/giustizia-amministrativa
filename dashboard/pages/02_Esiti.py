@@ -81,14 +81,19 @@ st.subheader("Tasso accoglimento per materia")
 # Use ga_cross compose (has all years in one mart file)
 df_materie_all = load_mart("ga_cross", "mart_esiti", year)
 if not df_materie_all.empty:
+    has_brevi = "quota_brevi_pct" in df_materie_all.columns
+    agg_map = {
+        "accoglimenti": "sum",
+        "rigetti": "sum",
+        "pervenuti": "sum",
+    }
+    if has_brevi:
+        agg_map["sentenze"] = "sum"
+        agg_map["sentenze_brevi"] = "sum"
     df_materie = (
         df_materie_all[df_materie_all["anno"] == year]
         .groupby("classificazione_ricorso", as_index=False)
-        .agg({
-            "accoglimenti": "sum",
-            "rigetti": "sum",
-            "pervenuti": "sum",
-        })
+        .agg(agg_map)
         .query("pervenuti >= 50")
         .sort_values("pervenuti", ascending=False)
     )
@@ -98,6 +103,11 @@ if not df_materie_all.empty:
             df_materie["accoglimenti"] * 100 /
             (df_materie["accoglimenti"] + df_materie["rigetti"]).replace(0, 1)
         ).round(1)
+        if has_brevi:
+            df_materie["quota_brevi_pct"] = (
+                df_materie["sentenze_brevi"] * 100 /
+                df_materie["sentenze"].replace(0, pd.NA)
+            ).astype(float).round(1)
 
         top_materie = st.slider("Top materie", 5, 30, 15, key="top_materie")
         df_plot = df_materie.head(top_materie)
@@ -158,15 +168,19 @@ if not df_materie_all.empty:
         st.plotly_chart(fig3, width="stretch")
 
         with st.expander("Tabella completa materie"):
+            base_cols = ["classificazione_ricorso", "pervenuti", "accoglimenti", "rigetti", "tasso_accoglimento"]
+            rename = {
+                "classificazione_ricorso": "Materia",
+                "pervenuti": "Pervenuti",
+                "accoglimenti": "Accolti",
+                "rigetti": "Rigetti",
+                "tasso_accoglimento": "Tasso %",
+            }
+            if has_brevi and "quota_brevi_pct" in df_materie.columns:
+                base_cols.append("quota_brevi_pct")
+                rename["quota_brevi_pct"] = "% sentenze brevi"
             st.dataframe(
-                df_materie[["classificazione_ricorso", "pervenuti", "accoglimenti", "rigetti", "tasso_accoglimento"]]
-                .rename(columns={
-                    "classificazione_ricorso": "Materia",
-                    "pervenuti": "Pervenuti",
-                    "accoglimenti": "Accolti",
-                    "rigetti": "Rigetti",
-                    "tasso_accoglimento": "Tasso %",
-                }),
+                df_materie[base_cols].rename(columns=rename),
                 width="stretch",
                 hide_index=True,
             )

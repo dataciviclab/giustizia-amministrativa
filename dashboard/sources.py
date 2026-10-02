@@ -1,6 +1,6 @@
 """Fonti dati per la dashboard Giustizia Amministrativa.
 
-Multi-dataset: 9 dataset + compose ga_cross.
+Multi-dataset: registry del repo + compose ga_cross e ga_definizioni.
 """
 
 from __future__ import annotations
@@ -68,6 +68,36 @@ def query_sentenze(sql: str, year: int = YEAR_DEFAULT):
 @st.cache_data(ttl=3600, show_spinner=False)
 def query_cross(sql: str, years: tuple[int, ...] = tuple(YEARS)):
     return _q_multi("ga_cross", sql, list(years))
+
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def query_pareri(sql: str, year: int = YEAR_DEFAULT):
+    return _q("ga_pareri", sql, year)
+
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def query_sentenze_brevi(sql: str, year: int = YEAR_DEFAULT):
+    return _q("ga_sentenze_brevi", sql, year)
+
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def query_tipo_decisione(sql: str, year: int = YEAR_DEFAULT):
+    return _q("ga_ricorsi_tipo_decisione", sql, year)
+
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def load_definizioni_mezzi_anno(year: int = YEAR_DEFAULT):
+    return load_mart("ga_definizioni", "mart_mezzi_anno", year)
+
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def load_definizioni_sintesi_sede(year: int = YEAR_DEFAULT):
+    return load_mart("ga_definizioni", "mart_sintesi_sede", year)
+
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def load_definizioni_outlier(year: int = YEAR_DEFAULT):
+    return load_mart("ga_definizioni", "mart_outlier_sedi", year)
 
 
 @st.cache_data(ttl=3600, show_spinner=False)

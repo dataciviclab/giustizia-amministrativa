@@ -1,8 +1,11 @@
 -- OpenGA emette NOME_SEDE per i pervenuti SENZA separatori
 -- (es. "TAR LAZIOROMA" invece di "TAR LAZIO - ROMA").
--- Causa: fonte, non normalize_string. Il contratto del Lab è il nome
--- canonico con " - ", allineato a ga_ricorsi_definiti / ga_sentenze.
--- Fix: override per codice_sede (chiave stabile della sede).
+-- Causa: fonte, non normalize_string. Contratto Lab: nome canonico con " - ",
+-- allineato a ga_ricorsi_definiti / ga_sentenze.
+--
+-- Codelist: data/sedi_canonici.csv (codice_sede -> nome_sede_canonico).
+-- Il path e' risolto via template {base_dir_posix} del toolkit (dir del dataset.yml).
+-- Protezione: tests/test_sede_mapping_contract.py legge lo stesso CSV.
 WITH base AS (
     SELECT
         cast_bigint(floor(cast("ANNO_DEPOSITO" AS double) / 100)) AS anno,
@@ -14,41 +17,10 @@ WITH base AS (
     FROM raw_input
 ),
 sedi AS (
-    SELECT * FROM (VALUES
-        (1,  'TAR LAZIO - LATINA'),
-        (2,  'CdS GIURISDIZIONALE - ROMA'),
-        (3,  'TAR LAZIO - ROMA'),
-        (4,  'TAR ABRUZZO - L''AQUILA'),
-        (5,  'TAR ABRUZZO - PESCARA'),
-        (6,  'TAR TRENTINO ALTO ADIGE - BOLZANO'),
-        (7,  'TAR BASILICATA - POTENZA'),
-        (8,  'TAR CALABRIA - CATANZARO'),
-        (9,  'TAR CALABRIA - REGGIO CALABRIA'),
-        (10, 'TAR CAMPANIA - NAPOLI'),
-        (11, 'TAR CAMPANIA - SALERNO'),
-        (12, 'TAR EMILIA-ROMAGNA - BOLOGNA'),
-        (13, 'TAR EMILIA-ROMAGNA - PARMA'),
-        (14, 'TAR FRIULI VENEZIA GIULIA - TRIESTE'),
-        (15, 'TAR LIGURIA - GENOVA'),
-        (16, 'TAR LOMBARDIA - MILANO'),
-        (17, 'TAR LOMBARDIA - BRESCIA'),
-        (18, 'TAR MARCHE - ANCONA'),
-        (19, 'TAR MOLISE - CAMPOBASSO'),
-        (20, 'TAR PIEMONTE - TORINO'),
-        (21, 'TAR PUGLIA - BARI'),
-        (22, 'TAR PUGLIA - LECCE'),
-        (23, 'TAR SARDEGNA - CAGLIARI'),
-        (24, 'TAR SICILIA - PALERMO'),
-        (25, 'TAR SICILIA - CATANIA'),
-        (26, 'TAR TOSCANA - FIRENZE'),
-        (27, 'TAR TRENTINO ALTO ADIGE - TRENTO'),
-        (28, 'TAR UMBRIA - PERUGIA'),
-        (29, 'TAR VALLE D''AOSTA - AOSTA'),
-        (30, 'TAR VENETO - VENEZIA'),
-        (31, 'CdS CONSULTIVE - ROMA'),
-        (32, 'CGA GIURISDIZIONALE - PALERMO'),
-        (33, 'CGA CONSULTIVE - PALERMO')
-    ) AS t(codice_sede, nome_sede_canonico)
+    SELECT
+        cast_bigint("codice_sede") AS codice_sede,
+        normalize_string("nome_sede_canonico") AS nome_sede_canonico
+    FROM read_csv_auto('{base_dir_posix}/data/sedi_canonici.csv')
 )
 SELECT
     b.anno,

@@ -3,7 +3,7 @@
 -- raw_input = ga_ricorsi_tipo_decisione (clean)
 -- support.definiti / support.sentenze_brevi per contesto esiti e mix brevi
 --
--- ATtenzione: non unire a ga_cross per materia — questo compose non ha
+-- Attenzione: non unire a ga_cross per materia — questo compose non ha
 -- classificazione_ricorso. È il grano giusto per "come lavora ogni sede".
 
 WITH td AS (

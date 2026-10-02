@@ -6,13 +6,14 @@ dataset:
   source_id: dataciviclab_composite
   tags: [giustizia, ga, compose, cross]
   category: giustizia
-  description: "Compose GA: flusso ricorsi pervenuti → definiti per sede/classificazione/anno. Visione d'insieme della giustizia amministrativa italiana."
+  description: "Compose GA: flusso ricorsi pervenuti → definiti per sede/classificazione/anno, con mix sentenze brevi/piene dalla stessa materia. Visione d'insieme della giustizia amministrativa italiana."
   years: [2026]
   time_coverage:
     mode: snapshot
 
 # Compose: unisce i clean dei dataset GA a livello aggregato.
-# Eseguire prima: toolkit run per tutti i dataset singoli in datasets/.
+# Grano: anno × codice_sede × classificazione_ricorso.
+# Eseguire prima: toolkit run per i dataset singoli in datasets/.
 
 raw:
   output_policy: overwrite
@@ -29,9 +30,11 @@ support:
     name: definiti
     config: ../../datasets/ga-ricorsi-definiti/dataset.yml
     years: [2026]
+  # Fonte sentenze AL GRANO MATERIA (ha classificazione_ricorso).
+  # Sostituisce ga-sentenze (record-level senza materia) nel join del clean.
   - type: dataset
-    name: sentenze
-    config: ../../datasets/ga-sentenze/dataset.yml
+    name: sentenze_brevi
+    config: ../../datasets/ga-sentenze-brevi/dataset.yml
     years: [2026]
   - type: dataset
     name: provvedimenti
@@ -51,6 +54,8 @@ clean:
     - pervenuti
     - definiti
     - sentenze
+    - sentenze_brevi
+    - sentenze_piene
     - accoglimenti
     - rigetti
   validate:

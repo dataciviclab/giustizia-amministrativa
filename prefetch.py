@@ -10,11 +10,14 @@ Supported types:
   - ricorsi-pervenuti-class: Ricorsi pervenuti per classificazione (31 sedi)
   - provvedimenti: Provvedimenti pubblicati (31 sedi)
   - ricorsi-pendenti: Ricorsi pendenti per periodo (solo CdS)
+  - pareri: Pareri sezioni consultive (CdS + CGA Sicilia)
+  - sentenze-brevi: Ricorsi definiti con sentenze e sentenze brevi (31 sedi)
+  - ricorsi-tipo-decisione: Ricorsi definiti per tipo di decisione (31 sedi)
 
 Usage:
     python prefetch.py output.csv                          # default: ricorsi-appalto
     python prefetch.py output.csv --type sentenze
-    python prefetch.py output.csv --type decreti
+    python prefetch.py output.csv --type pareri
     python prefetch.py output.csv --dry-run
 """
 
@@ -61,6 +64,20 @@ DATASET_TYPES = {
         "suffix": "ricorsi-pendenti-per-periodo",
         "year_col": "ANNO_MESE_RIFERIMENTO",
         "cds_only": True,
+    },
+    "pareri": {
+        "suffix": "pareri",
+        "year_col": "ANNO_PUBBLICAZIONE",
+        # Solo sezioni consultive: CdS e CGA Sicilia
+        "sources": ["cds", "cga-sicilia"],
+    },
+    "sentenze-brevi": {
+        "suffix": "ricorsi-definiti-con-sentenze-e-sentenze-brevi-per-classificazione",
+        "year_col": "ANNO_SENTENZA",
+    },
+    "ricorsi-tipo-decisione": {
+        "suffix": "ricorsi-definiti-per-tipo-di-decisione",
+        "year_col": "ANNO_PUBBLICAZIONE",
     },
 }
 
@@ -109,12 +126,17 @@ def main():
     all_rows: list[dict] = []
     fieldnames: list[str] | None = None
 
-    # For cds_only types, only process CdS
-    sources_to_process = ["cds"] if ds_config.get("cds_only") else SEDI
+    # Prefer explicit sources list; fall back to cds_only / all 31 sedi
+    if "sources" in ds_config:
+        sources_to_process = list(ds_config["sources"])
+    elif ds_config.get("cds_only"):
+        sources_to_process = ["cds"]
+    else:
+        sources_to_process = list(SEDI)
 
     for i, src_slug in enumerate(sources_to_process):
         ds_id = f"{src_slug}-{ds_config['suffix']}"
-        print(f"[{i+1}/{len(SEDI)}] {src_slug}...", end=" ", flush=True)
+        print(f"[{i+1}/{len(sources_to_process)}] {src_slug}...", end=" ", flush=True)
 
         if args.dry_run:
             print("(dry-run)")

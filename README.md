@@ -14,10 +14,13 @@ Sistema di intelligence sulla giustizia amministrativa: raccoglie i dati ufficia
 
 1. **Quanti ricorsi arrivano e come variano nel tempo?** → trend pervenuti per sede/materia 2017-2026
 2. **Come si chiudono i ricorsi?** → esiti (accoglimento/rigetto) per sede/materia
-3. **Quali materie hanno più contenzioso?** → classificazioni per volume e tasso di accoglimento
-4. **Quanto è produttiva ogni sede?** → provvedimenti che definiscono vs non definiscono
-5. **Qual è il backlog di ricorsi pendenti?** → stock mensile per sede
-6. **Com'è composto il contenzioso sugli appalti?** → ricorsi appalto con CIG (joinabile con ANAC)
+3. **Con quale meccanismo si definiscono?** → sentenza vs decreto decisori vs altri (`ga-ricorsi-tipo-decisione`, compose `ga-definizioni`)
+4. **Quante sentenze brevi vs piene?** → mix per materia e sede (`ga-sentenze-brevi`)
+5. **Quali materie hanno più contenzioso?** → classificazioni per volume e tasso di accoglimento
+6. **Quanto è produttiva ogni sede?** → provvedimenti che definiscono vs non definiscono
+7. **Qual è il backlog di ricorsi pendenti?** → stock mensile CdS (`openga-ricorsi-cds`)
+8. **Com'è composto il contenzioso sugli appalti?** → ricorsi appalto con CIG (joinabile con ANAC)
+9. **Quanto tempo impiegano le sezioni consultive?** → pareri CdS/CGA con lag deposito→pubblicazione (`ga-pareri`)
 
 ## Dataset
 
@@ -30,31 +33,38 @@ Sistema di intelligence sulla giustizia amministrativa: raccoglie i dati ufficia
 | `ga-ricorsi-pervenuti-class` | Ricorsi in ingresso per materia | 2017-2026 | 2 |
 | `ga-provvedimenti` | Provvedimenti pubblicati per sede | 2017-2026 | 2 |
 | `ga-ricorsi-appalto` | Ricorsi in materia d'appalto (con CIG) | 2017-2026 | 2 |
-| `compose/ga-cross` | Compose: flusso pervenuti → definiti → esito | 2017-2026 | 3 |
+| `ga-pareri` | Pareri sezioni consultive (CdS + CGA) | 2017-2026 | 2 |
+| `ga-sentenze-brevi` | Sentenze brevi vs piene per materia | 2017-2026 | 2 |
+| `ga-ricorsi-tipo-decisione` | Definizioni per meccanismo (sentenza/decreto/altro) | 2017-2026 | 2 |
+| `openga-ricorsi-cds` | Ricorsi pendenti CdS (stock mensile, slug `openga_ricorsi_cds`) | 2023-2026 | 1 |
+| `compose/ga-cross` | Compose: flusso pervenuti → definiti → esito + mix brevi (grano materia) | 2017-2026 | 3 |
+| `compose/ga-definizioni` | Compose: mezzi di definizione per sede×anno | 2017-2026 | 3 |
 
-### Mart analitici (17 totali)
+### Mart analitici
 
-**Per dataset** (14): 2 mart cadauno (per sede + per tipo/classificazione)
+**Per dataset**: 2 mart cadauno (per sede + per tipo/classificazione)
 
-**Compose** (3): panoramica, flusso per sede, esiti per materia
+**Compose**: `ga_cross` (panoramica, flusso sede, esiti+materia) · `ga_definizioni` (mezzi anno, sintesi sede, outlier)
 
 ## Dashboard
 
-Dashboard Streamlit con 3 livelli (da costruire):
+Dashboard Streamlit multi-pagina (`dashboard/`), pronta a leggere i clean/mart del repo:
 
 | Livello | Pagina | Contenuto |
 |---|---|---|
 | **Monitoraggio** | Panoramica | Trend nazionale, volumi per anno, tasso definizione |
 | **Intelligence** | Esiti | Tasso accoglimento per materia e sede, trend |
-| | Appalti | Contenzioso sugli appalti, join con ANAC |
+| | Appalti | Contenzioso sugli appalti (CIG) |
 | **Esplorazione** | Scheda Sede | Profilo completo di ogni sede |
-| | Query SQL | Query libera su tutti i dataset |
+| | Query SQL | Query libera sui dataset del registry |
+
+> I nuovi dataset (`ga_pareri`, `ga_sentenze_brevi`, `ga_ricorsi_tipo_decisione`) e il compose `ga_definizioni` non sono ancora collegati alle pagine: wiring dashboard in una PR dedicata.
 
 ## Come si usa
 
 ```bash
-# Setup
-pip install -r requirements.txt
+# Setup (pyproject — vedi ADR-001 §8)
+pip install -e ".[dev]"
 
 # Validare config
 make check
@@ -71,31 +81,35 @@ make run-all
 # Dashboard
 cd dashboard && streamlit run app.py
 
-# Test
-python -m pytest tests/
+# Contract test (richiede out/ già runnato)
+python -m pytest tests/ -q
 ```
 
 ## Struttura
 
 ```
 giustizia-amministrativa/
-├── datasets/                   # 7 dataset (toolkit pipeline)
+├── datasets/                   # toolkit pipeline
 │   ├── ga-sentenze/
 │   ├── ga-decreti/
 │   ├── ga-ordinanze/
 │   ├── ga-ricorsi-definiti/
 │   ├── ga-ricorsi-pervenuti-class/
 │   ├── ga-provvedimenti/
-│   └── ga-ricorsi-appalto/
+│   ├── ga-ricorsi-appalto/     # slug: openga_ricorsi_appalto
+│   ├── ga-pareri/
+│   ├── ga-sentenze-brevi/
+│   ├── ga-ricorsi-tipo-decisione/
+│   └── openga-ricorsi-cds/     # pendenti CdS (stock mensile)
 ├── compose/
-│   └── ga-cross/              # cross-dataset (flusso pervenuti→definiti)
-├── dashboard/                  # Streamlit (da costruire)
+│   ├── ga-cross/              # flusso pervenuti→definiti + mix brevi (materia)
+│   └── ga-definizioni/        # mezzi di definizione per sede×anno
+├── dashboard/                  # Streamlit multi-pagina
 ├── out/                        # output pipeline (raw/clean/mart)
 ├── registry/                   # artifact catalog
 ├── tests/                      # contract test
 ├── prefetch.py                 # script download CKAN
-├── Makefile
-└── requirements.txt
+└── Makefile
 ```
 
 ## CI/CD

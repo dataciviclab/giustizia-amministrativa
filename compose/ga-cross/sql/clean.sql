@@ -6,6 +6,12 @@
 -- NOTA: le sentenze entrano SOLO da ga_sentenze_brevi (ha classificazione).
 -- ga-sentenze non ha materia: in passato veniva broadcast per sede e le
 -- somme risultavano inflate. Oggi sentenze/brevi/piene sono al grano materia.
+--
+-- NOTA FULL JOIN: definiti e sentenze sono joinati a FULL, non LEFT —
+-- le righe con classificazione non appaiata ai pervenuti NON vengono scartate
+-- (tassonomia OpenGA divergente tra file, scarto esploso dal 2022: ~33%).
+-- Le righe solo-definiti/sentenze hanno pervenuti = 0 e
+-- tasso_definizione = NULL (NULLIF).
 
 WITH pervenuti_agg AS (
     SELECT
@@ -45,13 +51,13 @@ sentenze_agg AS (
     GROUP BY anno, codice_sede, classificazione_ricorso
 )
 SELECT
-    p.anno,
-    p.codice_sede,
-    -- nome_sede preferito da definiti/sentenze_brevi (contratto con spazi);
-    -- il raw dei pervenuti da OpenGA omette i separatori " - "
-    COALESCE(d.nome_sede, s.nome_sede, p.nome_sede) AS nome_sede,
-    p.classificazione_ricorso,
-    p.pervenuti,
+    COALESCE(p.anno, d.anno, s.anno) AS anno,
+    COALESCE(p.codice_sede, d.codice_sede, s.codice_sede) AS codice_sede,
+    -- nome_sede preferito da pervenuti/definiti/sentenze_brevi (contratto
+    -- con spazi); il raw dei pervenuti da OpenGA omette i separatori " - "
+    COALESCE(p.nome_sede, d.nome_sede, s.nome_sede) AS nome_sede,
+    COALESCE(p.classificazione_ricorso, d.classificazione_ricorso, s.classificazione_ricorso) AS classificazione_ricorso,
+    COALESCE(p.pervenuti, 0) AS pervenuti,
     COALESCE(d.definiti, 0) AS definiti,
     COALESCE(s.sentenze, 0) AS sentenze,
     COALESCE(s.sentenze_brevi, 0) AS sentenze_brevi,
@@ -62,12 +68,12 @@ SELECT
     ROUND(COALESCE(d.accoglimenti, 0) * 100.0 / NULLIF(COALESCE(d.accoglimenti, 0) + COALESCE(d.rigetti, 0), 0), 1) AS tasso_accoglimento,
     ROUND(COALESCE(s.sentenze_brevi, 0) * 100.0 / NULLIF(COALESCE(s.sentenze, 0), 0), 1) AS quota_sentenze_brevi
 FROM pervenuti_agg p
-LEFT JOIN definiti_agg d
+FULL JOIN definiti_agg d
     ON p.anno = d.anno
     AND p.codice_sede = d.codice_sede
     AND p.classificazione_ricorso = d.classificazione_ricorso
-LEFT JOIN sentenze_agg s
-    ON p.anno = s.anno
-    AND p.codice_sede = s.codice_sede
-    AND p.classificazione_ricorso = s.classificazione_ricorso
-ORDER BY p.anno, p.pervenuti DESC
+FULL JOIN sentenze_agg s
+    ON COALESCE(p.anno, d.anno) = s.anno
+    AND COALESCE(p.codice_sede, d.codice_sede) = s.codice_sede
+    AND COALESCE(p.classificazione_ricorso, d.classificazione_ricorso) = s.classificazione_ricorso
+ORDER BY anno, pervenuti DESC

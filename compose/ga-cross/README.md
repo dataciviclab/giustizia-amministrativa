@@ -28,4 +28,16 @@ Quindi `definiti > pervenuti` su una materia/anno è lecito (circa il 20-38% del
 
 ## nome_sede
 
-Il clean preferisce il nome da `definiti`/`sentenze_brevi` (contratto con ` - `). Il raw OpenGA dei pervenuti omette i separatori; il fix a monte è in `datasets/ga-ricorsi-pervenuti-class/sql/clean.sql`.
+Il clean preferisce il nome da `pervenuti` (e in fallback `definiti`/`sentenze_brevi`, contratto con ` - `). Il raw OpenGA dei pervenuti omette i separatori; il fix a monte è in `datasets/ga-ricorsi-pervenuti-class/sql/clean.sql`.
+
+## FULL JOIN: righe non appaiate preservate
+
+Definiti e sentenze sono joinati a FULL (non LEFT): le righe la cui combinazione
+(anno × sede × classificazione) non trova match nei pervenuti **restano nel
+clean** con `pervenuti = 0` e `tasso_definizione = NULL`. Senza questa scelta,
+lo scarto di appaiamento (tassonomia OpenGA divergente tra file — da ~900 a
+~1200 classificazioni dal 2022) sottostimava i totali nazionali fino al −33%
+sui definiti nel 2022. Le somme per sede/materia nei mart sono quindi su
+tutte le righe; `tasso_definizione` va letto con prudenza sulle righe a
+`pervenuti = 0` (definizioni di ricorsi depositati in anni/classificazioni
+precedenti).

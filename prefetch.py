@@ -9,7 +9,7 @@ Supported types:
   - ricorsi-definiti: Ricorsi definiti per classificazione ed esito (31 sedi)
   - ricorsi-pervenuti-class: Ricorsi pervenuti per classificazione (31 sedi)
   - provvedimenti: Provvedimenti pubblicati (31 sedi)
-  - ricorsi-pendenti: Ricorsi pendenti per periodo (solo CdS)
+  - ricorsi-pendenti: Ricorsi pendenti per periodo (33 sedi)
   - pareri: Pareri sezioni consultive (CdS + CGA Sicilia)
   - sentenze-brevi: Ricorsi definiti con sentenze e sentenze brevi (31 sedi)
   - ricorsi-tipo-decisione: Ricorsi definiti per tipo di decisione (31 sedi)
@@ -63,7 +63,6 @@ DATASET_TYPES = {
     "ricorsi-pendenti": {
         "suffix": "ricorsi-pendenti-per-periodo",
         "year_col": "ANNO_MESE_RIFERIMENTO",
-        "cds_only": True,
     },
     "pareri": {
         "suffix": "pareri",
@@ -95,9 +94,6 @@ SEDI = [
     "tar-umbria", "tar-valle-d-aosta", "tar-veneto",
     "trga-bolzano", "trga-trento",
 ]
-
-# Note: ricorsi-pendenti is CdS-only (not all 31 sedi)
-
 
 def fetch_csv_urls(dataset_id: str) -> list[str]:
     """Return CSV download URLs for a CKAN dataset."""

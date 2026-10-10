@@ -40,6 +40,12 @@ support:
     name: provvedimenti
     config: ../../datasets/ga-provvedimenti/dataset.yml
     years: [2026]
+  # Stock pendenti per sede/anno — solo marts (nessun uso nel clean:
+  # il pendente non ha grano materia). Gap fonte: assente 2017-2019 e 2024.
+  - type: dataset
+    name: pendenti
+    config: ../../datasets/ga-ricorsi-pendenti/dataset.yml
+    years: [2026]
 
 clean:
   sql: "sql/clean.sql"
@@ -72,10 +78,13 @@ mart:
       sql: "sql/mart_sede_flusso.sql"
     - name: mart_esiti
       sql: "sql/mart_esiti.sql"
+    - name: mart_sede_stock
+      sql: "sql/mart_sede_stock.sql"
   required_tables:
     - mart_panoramica
     - mart_sede_flusso
     - mart_esiti
+    - mart_sede_stock
   validate:
     table_rules:
       mart_panoramica:
@@ -83,6 +92,8 @@ mart:
       mart_sede_flusso:
         min_rows: 50
       mart_esiti:
+        min_rows: 10
+      mart_sede_stock:
         min_rows: 10
 
 duckdb:

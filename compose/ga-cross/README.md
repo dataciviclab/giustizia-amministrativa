@@ -30,6 +30,19 @@ Quindi `definiti > pervenuti` su una materia/anno è lecito (circa il 20-38% del
 
 Il clean preferisce il nome da `pervenuti` (e in fallback `definiti`/`sentenze_brevi`, contratto con ` - `). Il raw OpenGA dei pervenuti omette i separatori; il fix a monte è in `datasets/ga-ricorsi-pervenuti-class/sql/clean.sql`.
 
+## mart_sede_stock — flusso × stock
+
+Affianca ai flussi per sede/anno il **pendente medio dichiarato**
+(`ga-ricorsi-pendenti`, support). Colonne chiave:
+
+- `pendenti_media` / `pendenti_min` / `pendenti_max` — stock mensile
+  aggregato a livello annuo (NULL dove la fonte non copre l'anno)
+- `pendenti_n_mesi` — mesi disponibili: 2020 e 2026 parziali; **2017-2019
+  e 2024 assenti** (gap di pubblicazione OpenGA)
+- `definisci_su_pendente` — `definiti / pendenti_media`: ~1 significa che
+  gli anni di definizione assorbono l'arretrato alla velocita' con cui si
+  forma; > 1 = burn-down attivo
+
 ## FULL JOIN: righe non appaiate preservate
 
 Definiti e sentenze sono joinati a FULL (non LEFT): le righe la cui combinazione

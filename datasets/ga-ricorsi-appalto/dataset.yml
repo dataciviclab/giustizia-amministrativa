@@ -18,7 +18,7 @@ raw:
   - name: openga
     type: script
     args:
-      command: "python ../../prefetch.py raw_input.csv"
+      command: "python ../../prefetch.py raw_input.csv --type ricorsi-appalto"
       output: raw_input.csv
       filename: raw_input.csv
     primary: true

@@ -32,7 +32,7 @@ Dataset unificato delle ordinanze del Consiglio di Stato e dei Tribunali Amminis
 
 ## Chiavi di join
 
-- `NUMERO_RICORSO` ↔ `ga-sentenze`, `ga-decreti`, `openga-ricorsi-appalto`
+- `NUMERO_RICORSO` ↔ `ga-sentenze`, `ga-decreti`, `ga-ricorsi-appalto`
 - `NUMERO_RICORSO` è univoco a livello nazionale, non per sede
 
 ## Fonti

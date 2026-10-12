@@ -1,4 +1,4 @@
-# openga-ricorsi-appalto
+# ga-ricorsi-appalto
 
 Ricorsi pervenuti in materia d'appalto presso tutte le sedi della Giustizia Amministrativa — Consiglio di Stato, CGA Sicilia, 27 TAR e 2 TRGA. Integrati con dati ANAC (CIG).
 

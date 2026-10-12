@@ -32,7 +32,7 @@ Dataset unificato delle sentenze del Consiglio di Stato e dei Tribunali Amminist
 
 ## Chiavi di join
 
-- `NUMERO_RICORSO` ↔ `openga-ricorsi-appalto` (ricorsi appalto)
+- `NUMERO_RICORSO` ↔ `ga-ricorsi-appalto` (ricorsi appalto)
 - `NUMERO_RICORSO` ↔ altri dataset GA (stessa chiave cross-sede)
 - `CODICE_CIG` (negli appalti) ↔ dataset ANAC
 

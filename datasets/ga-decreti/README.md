@@ -32,7 +32,7 @@ Dataset unificato dei decreti del Consiglio di Stato e dei Tribunali Amministrat
 
 ## Chiavi di join
 
-- `NUMERO_RICORSO` ↔ `ga-sentenze`, `ga-ordinanze`, `openga-ricorsi-appalto`
+- `NUMERO_RICORSO` ↔ `ga-sentenze`, `ga-ordinanze`, `ga-ricorsi-appalto`
 
 ## Mart
 

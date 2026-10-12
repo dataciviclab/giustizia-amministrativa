@@ -36,7 +36,6 @@ Sistema di intelligence sulla giustizia amministrativa: raccoglie i dati ufficia
 | `ga-pareri` | Pareri sezioni consultive (CdS + CGA) | 2017-2026 | 2 |
 | `ga-sentenze-brevi` | Sentenze brevi vs piene per materia | 2017-2026 | 2 |
 | `ga-ricorsi-tipo-decisione` | Definizioni per meccanismo (sentenza/decreto/altro) | 2017-2026 | 2 |
-| `openga-ricorsi-cds` | Ricorsi pendenti CdS (stock mensile, slug `openga_ricorsi_cds`) — legacy, superseded da `ga-ricorsi-pendenti` | 2023-2026 | 1 |
 | `ga-ricorsi-pendenti` | Stock mensile pendenti per tutte le 33 sedi | 2020-2026* | 2 |
 | `compose/ga-cross` | Compose: flusso pervenuti → definiti → esito + mix brevi + stock pendenti (grano materia/flusso) | 2017-2026 | 4 |
 | `compose/ga-definizioni` | Compose: mezzi di definizione per sede×anno | 2017-2026 | 3 |

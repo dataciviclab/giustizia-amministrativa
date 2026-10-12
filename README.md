@@ -18,7 +18,7 @@ Sistema di intelligence sulla giustizia amministrativa: raccoglie i dati ufficia
 4. **Quante sentenze brevi vs piene?** → mix per materia e sede (`ga-sentenze-brevi`)
 5. **Quali materie hanno più contenzioso?** → classificazioni per volume e tasso di accoglimento
 6. **Quanto è produttiva ogni sede?** → provvedimenti che definiscono vs non definiscono
-7. **Qual è il backlog di ricorsi pendenti?** → stock mensile per tutte le sedi (`ga-ricorsi-pendenti`; legacy CdS-only: `openga-ricorsi-cds`)
+7. **Qual è il backlog di ricorsi pendenti?** → stock mensile per tutte le sedi (`ga-ricorsi-pendenti`)
 8. **Com'è composto il contenzioso sugli appalti?** → ricorsi appalto con CIG (joinabile con ANAC)
 9. **Quanto tempo impiegano le sezioni consultive?** → pareri CdS/CGA con lag deposito→pubblicazione (`ga-pareri`)
 
@@ -36,7 +36,6 @@ Sistema di intelligence sulla giustizia amministrativa: raccoglie i dati ufficia
 | `ga-pareri` | Pareri sezioni consultive (CdS + CGA) | 2017-2026 | 2 |
 | `ga-sentenze-brevi` | Sentenze brevi vs piene per materia | 2017-2026 | 2 |
 | `ga-ricorsi-tipo-decisione` | Definizioni per meccanismo (sentenza/decreto/altro) | 2017-2026 | 2 |
-| `openga-ricorsi-cds` | Ricorsi pendenti CdS (stock mensile, slug `openga_ricorsi_cds`) — legacy, superseded da `ga-ricorsi-pendenti` | 2023-2026 | 1 |
 | `ga-ricorsi-pendenti` | Stock mensile pendenti per tutte le 33 sedi | 2020-2026* | 2 |
 | `compose/ga-cross` | Compose: flusso pervenuti → definiti → esito + mix brevi + stock pendenti (grano materia/flusso) | 2017-2026 | 4 |
 | `compose/ga-definizioni` | Compose: mezzi di definizione per sede×anno | 2017-2026 | 3 |
@@ -104,8 +103,7 @@ giustizia-amministrativa/
 │   ├── ga-pareri/
 │   ├── ga-sentenze-brevi/
 │   ├── ga-ricorsi-tipo-decisione/
-│   ├── ga-ricorsi-pendenti/
-│   └── openga-ricorsi-cds/     # pendenti CdS (stock mensile)
+│   └── ga-ricorsi-pendenti/
 ├── compose/
 │   ├── ga-cross/              # flusso pervenuti→definiti + mix brevi (materia)
 │   └── ga-definizioni/        # mezzi di definizione per sede×anno

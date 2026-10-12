@@ -56,11 +56,6 @@ def query_appalti(sql: str, year: int = YEAR_DEFAULT):
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
-def query_cds(sql: str, year: int = YEAR_DEFAULT):
-    return _q("openga_ricorsi_cds", sql, year)
-
-
-@st.cache_data(ttl=3600, show_spinner=False)
 def query_sentenze(sql: str, year: int = YEAR_DEFAULT):
     return _q("ga_sentenze", sql, year)
 

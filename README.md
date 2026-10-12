@@ -18,7 +18,7 @@ Sistema di intelligence sulla giustizia amministrativa: raccoglie i dati ufficia
 4. **Quante sentenze brevi vs piene?** → mix per materia e sede (`ga-sentenze-brevi`)
 5. **Quali materie hanno più contenzioso?** → classificazioni per volume e tasso di accoglimento
 6. **Quanto è produttiva ogni sede?** → provvedimenti che definiscono vs non definiscono
-7. **Qual è il backlog di ricorsi pendenti?** → stock mensile per tutte le sedi (`ga-ricorsi-pendenti`; legacy CdS-only: `openga-ricorsi-cds`)
+7. **Qual è il backlog di ricorsi pendenti?** → stock mensile per tutte le sedi (`ga-ricorsi-pendenti`)
 8. **Com'è composto il contenzioso sugli appalti?** → ricorsi appalto con CIG (joinabile con ANAC)
 9. **Quanto tempo impiegano le sezioni consultive?** → pareri CdS/CGA con lag deposito→pubblicazione (`ga-pareri`)
 
@@ -103,8 +103,7 @@ giustizia-amministrativa/
 │   ├── ga-pareri/
 │   ├── ga-sentenze-brevi/
 │   ├── ga-ricorsi-tipo-decisione/
-│   ├── ga-ricorsi-pendenti/
-│   └── openga-ricorsi-cds/     # pendenti CdS (stock mensile)
+│   └── ga-ricorsi-pendenti/
 ├── compose/
 │   ├── ga-cross/              # flusso pervenuti→definiti + mix brevi (materia)
 │   └── ga-definizioni/        # mezzi di definizione per sede×anno

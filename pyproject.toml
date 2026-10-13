@@ -26,9 +26,22 @@ dev = [
 pipeline = [
     "dataciviclab-toolkit @ git+https://github.com/dataciviclab/toolkit.git",
 ]
+# Catalog engine per-repo (probe, inventory, source report).
+# Tag stabili: https://github.com/dataciviclab/source-observatory/tags
+observatory = [
+    "dataciviclab-source-observatory @ git+https://github.com/dataciviclab/source-observatory.git@main",
+]
 
 [project.urls]
 Home = "https://github.com/dataciviclab/giustizia-amministrativa"
 
 [tool.toolkit.extends]
 source_id = "giustizia-amministrativa"
+
+[tool.observatory]
+source_id = "openga"
+protocol = "ckan"
+base_url = "https://openga.giustizia-amministrativa.it/api/3/action/package_list?limit=1"
+observation_mode = "catalog-watch"
+verdict = "go"
+note = "CKAN Giustizia Amministrativa. Il portale e' 10 temi giuridici x ~40 corti/distretti (~400 package) + calendari udienze (~60, non nostri). I nostri 12 dataset curati coprono il 100% dei temi giuridici: items nel catalog = bacino monitorato, non quota usata. Drift utile = package dei nostri temi che spariscono."

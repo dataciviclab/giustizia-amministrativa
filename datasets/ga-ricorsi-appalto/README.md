@@ -41,3 +41,4 @@ Quali sono i volumi e la distribuzione del contenzioso sugli appalti pubblici in
 
 - intake
 - **2026-07-21**: esteso da 1 a 31 sedi (PR #700)
+- **2026-10-28**: **corretti gli importi** (`importo_complessivo_gara`, `importo_lotto`). Il clean usava `normalize_italian_number` su valori in **formato standard** (`84976869.76`): la macro rimuove i punti e moltiplicava il valore per 10ⁿ (×10..×10^10 — es. `84.976.869,76` pubblicato come `8.497.686.976`). Ora usa `cast_double`. Verificato cella per cella contro la fonte: 40.631 valori, 0 differenze.

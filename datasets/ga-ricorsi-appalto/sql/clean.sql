@@ -11,10 +11,14 @@ SELECT
     normalize_string("CODICE_ACCORDO_QUADRO") AS codice_accordo_quadro,
     normalize_string("NUMERO_GARA") AS numero_gara,
     normalize_string("OGGETTO_GARA") AS oggetto_gara,
-    normalize_italian_number("IMPORTO_COMPLESSIVO_GARA") AS importo_complessivo_gara,
+    -- Importi in formato STANDARD (punto decimale, nessuna virgola migliaia):
+    -- es. "84976869.76". NON usare normalize_italian_number, che rimuove i punti
+    -- e moltiplica il valore per 10^n (con lo sniffing DOUBLE la colonna ha un
+    -- solo punto → DOUBLE, e la macro pubblicava importi ×10..×10^10).
+    cast_double("IMPORTO_COMPLESSIVO_GARA") AS importo_complessivo_gara,
     cast_bigint("NUMERO_LOTTI_COMPONENTI") AS numero_lotti_componenti,
     normalize_string("OGGETTO_LOTTO") AS oggetto_lotto,
-    normalize_italian_number("IMPORTO_LOTTO") AS importo_lotto,
+    cast_double("IMPORTO_LOTTO") AS importo_lotto,
     normalize_string("STATO_GARA") AS stato_gara,
     normalize_string("SETTORE") AS settore,
     normalize_string("LUOGO_ISTAT") AS luogo_istat,

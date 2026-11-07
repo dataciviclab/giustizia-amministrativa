@@ -2,16 +2,16 @@
 
 ## Architettura
 
-31 source CKAN paralleli, uno per sede. clean.sql usa `FROM raw_input` — il toolkit gestisce il merge multi-file con `read_csv([paths], union_by_name=true)`.
+31 source CKAN native, una per sede (`download_all: true`, `prefer_datastore: false`). Il RAW produce un CSV per sede; `clean.read.mode: all` + `union_by_name=true` fondono i file nella vista `raw_input`.
 
-## Resource name matching
+## Dataset id
 
-Il toolkit CKAN matcha `resource_name` come substring case-insensitive. Per le sedi con apostrofo Unicode (`L'Aquila`, `Valle d'Aosta`), il nome va scritto con U+2019.
+Le source usano `dataset_id: "{sede}-decreti"`: ogni sede è un package CKAN separato con le risorse `2017-2024`, `2025`, `2026`.
 
 ## Run
 
 ```
-toolkit run full --config candidates/ga-decreti/dataset.yml --years 2024
+toolkit run --config datasets/ga-decreti/dataset.yml
 ```
 
 ## Volumi

@@ -15,13 +15,255 @@ dataset:
 raw:
   output_policy: overwrite
   sources:
-  - name: openga
-    type: script
+  - name: cds
+    type: ckan
     args:
-      command: "python ../../prefetch.py raw_input.csv --type ordinanze"
-      output: raw_input.csv
-      filename: raw_input.csv
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "cds-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "cds_ordinanze.csv"
     primary: true
+  - name: cga_sicilia
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "cga-sicilia-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "cga_sicilia_ordinanze.csv"
+  - name: tar_abruzzo_l_aquila
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-abruzzo-l-aquila-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_abruzzo_l_aquila_ordinanze.csv"
+  - name: tar_abruzzo_pescara
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-abruzzo-pescara-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_abruzzo_pescara_ordinanze.csv"
+  - name: tar_basilicata
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-basilicata-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_basilicata_ordinanze.csv"
+  - name: tar_calabria_catanzaro
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-calabria-catanzaro-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_calabria_catanzaro_ordinanze.csv"
+  - name: tar_calabria_reggio_calabria
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-calabria-reggio-calabria-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_calabria_reggio_calabria_ordinanze.csv"
+  - name: tar_campania_napoli
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-campania-napoli-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_campania_napoli_ordinanze.csv"
+  - name: tar_campania_salerno
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-campania-salerno-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_campania_salerno_ordinanze.csv"
+  - name: tar_emilia_romagna_bologna
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-emilia-romagna-bologna-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_emilia_romagna_bologna_ordinanze.csv"
+  - name: tar_emilia_romagna_parma
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-emilia-romagna-parma-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_emilia_romagna_parma_ordinanze.csv"
+  - name: tar_friuli_venezia_giulia
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-friuli-venezia-giulia-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_friuli_venezia_giulia_ordinanze.csv"
+  - name: tar_lazio_latina
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-lazio-latina-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_lazio_latina_ordinanze.csv"
+  - name: tar_lazio_roma
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-lazio-roma-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_lazio_roma_ordinanze.csv"
+  - name: tar_liguria
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-liguria-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_liguria_ordinanze.csv"
+  - name: tar_lombardia_brescia
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-lombardia-brescia-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_lombardia_brescia_ordinanze.csv"
+  - name: tar_lombardia_milano
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-lombardia-milano-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_lombardia_milano_ordinanze.csv"
+  - name: tar_marche
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-marche-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_marche_ordinanze.csv"
+  - name: tar_molise
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-molise-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_molise_ordinanze.csv"
+  - name: tar_piemonte
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-piemonte-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_piemonte_ordinanze.csv"
+  - name: tar_puglia_bari
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-puglia-bari-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_puglia_bari_ordinanze.csv"
+  - name: tar_puglia_lecce
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-puglia-lecce-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_puglia_lecce_ordinanze.csv"
+  - name: tar_sardegna
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-sardegna-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_sardegna_ordinanze.csv"
+  - name: tar_sicilia_catania
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-sicilia-catania-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_sicilia_catania_ordinanze.csv"
+  - name: tar_sicilia_palermo
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-sicilia-palermo-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_sicilia_palermo_ordinanze.csv"
+  - name: tar_toscana
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-toscana-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_toscana_ordinanze.csv"
+  - name: tar_umbria
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-umbria-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_umbria_ordinanze.csv"
+  - name: tar_valle_d_aosta
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-valle-d-aosta-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_valle_d_aosta_ordinanze.csv"
+  - name: tar_veneto
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-veneto-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_veneto_ordinanze.csv"
+  - name: trga_bolzano
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "trga-bolzano-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "trga_bolzano_ordinanze.csv"
+  - name: trga_trento
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "trga-trento-ordinanze"
+      download_all: true
+      prefer_datastore: false
+      filename: "trga_trento_ordinanze.csv"
 
 clean:
   read:

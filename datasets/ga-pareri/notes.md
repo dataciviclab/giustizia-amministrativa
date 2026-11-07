@@ -2,8 +2,8 @@
 
 ## Architettura
 
-2 package CKAN (CdS + CGA Sicilia), non le 31 sedi. Prefetch scarica tutte le
-risorse CSV di ciascun package: `2017-2024` (bulk) + `2025` + `2026`.
+2 source CKAN (CdS + CGA Sicilia), non le 31 sedi. `download_all: true`
+scarica tutte le risorse CSV di ciascun package: `2017-2024` (bulk) + `2025` + `2026`.
 
 ## Sedi diverse dal lato giurisdizionale
 
@@ -14,7 +14,7 @@ risorse CSV di ciascun package: `2017-2024` (bulk) + `2025` + `2026`.
 ## Copertura storica
 
 La risorsa multi-anno `2017-2024` è un unico CSV bulk (~16k righe CdS).
-Il clean fonde tutto in un unico `raw_input.csv`; l'anno analitico è
+Il clean legge i 2 file RAW (uno per sede); l'anno analitico è
 `ANNO_PUBBLICAZIONE` (colonna `anno`).
 
 ## Volumi indicativi (CdS)
@@ -31,4 +31,4 @@ Il clean fonde tutto in un unico `raw_input.csv`; l'anno analitico è
   (es. `LICENZIATO`, `RESPINGE ISTANZA DI SOSPENSIVA`)
 - `TIPO_PROVVEDIMENTO` distingue parere definitivo vs sospensivo — mart dedicato
 - La serie è storica 2017-2026 anche se il config runna `years: [2026]`
-  (stesso pattern di ga-sentenze: il prefetch concatena tutte le risorse)
+  (stesso pattern di ga-sentenze: `download_all` concatena le risorse del package)

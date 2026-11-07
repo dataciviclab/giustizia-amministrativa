@@ -19,7 +19,7 @@ COMPOSE  := $(shell find compose -name dataset.yml 2>/dev/null | sort)
 compose:
 	@for f in $(COMPOSE); do \
 		echo "=== $$f ==="; \
-		TOOLKIT_ALLOW_SCRIPT_SOURCE=1 $(TOOLKIT) run --config "$$f" || exit 1; \
+		$(TOOLKIT) run --config "$$f" || exit 1; \
 	done
 
 # --- Dataset principali ------------------------------------------------------
@@ -28,7 +28,7 @@ compose:
 run:
 	@for f in $(DATASETS); do \
 		echo "=== $$f ==="; \
-		TOOLKIT_ALLOW_SCRIPT_SOURCE=1 $(TOOLKIT) run --config "$$f" || exit 1; \
+		$(TOOLKIT) run --config "$$f" || exit 1; \
 	done
 
 .PHONY: run-all

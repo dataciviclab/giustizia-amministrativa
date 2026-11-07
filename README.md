@@ -36,7 +36,7 @@ Sistema di intelligence sulla giustizia amministrativa: raccoglie i dati ufficia
 | `ga-pareri` | Pareri sezioni consultive (CdS + CGA) | 2017-2026 | 2 |
 | `ga-sentenze-brevi` | Sentenze brevi vs piene per materia | 2017-2026 | 2 |
 | `ga-ricorsi-tipo-decisione` | Definizioni per meccanismo (sentenza/decreto/altro) | 2017-2026 | 2 |
-| `ga-ricorsi-pendenti` | Stock mensile pendenti per tutte le 33 sedi | 2020-2026* | 2 |
+| `ga-ricorsi-pendenti` | Stock mensile pendenti per tutte le 31 sedi | 2020-2026* | 2 |
 | `compose/ga-cross` | Compose: flusso pervenuti → definiti → esito + mix brevi + stock pendenti (grano materia/flusso) | 2017-2026 | 4 |
 | `compose/ga-definizioni` | Compose: mezzi di definizione per sede×anno | 2017-2026 | 3 |
 
@@ -72,7 +72,7 @@ pip install -e ".[dev]"
 # Validare config
 make check
 
-# Eseguire tutti i pipeline (include script download)
+# Eseguire tutti i dataset (RAW via CKAN native)
 make run
 
 # Eseguire compose (dopo i singoli)
@@ -111,7 +111,6 @@ giustizia-amministrativa/
 ├── out/                        # output pipeline (raw/clean/mart)
 ├── registry/                   # artifact catalog
 ├── tests/                      # contract test
-├── prefetch.py                 # script download CKAN
 └── Makefile
 ```
 

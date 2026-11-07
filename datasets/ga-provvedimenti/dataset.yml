@@ -15,13 +15,255 @@ dataset:
 raw:
   output_policy: overwrite
   sources:
-  - name: openga
-    type: script
+  - name: cds
+    type: ckan
     args:
-      command: "python ../../prefetch.py raw_input.csv --type provvedimenti"
-      output: raw_input.csv
-      filename: raw_input.csv
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "cds-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "cds_provvedimenti.csv"
     primary: true
+  - name: cga_sicilia
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "cga-sicilia-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "cga_sicilia_provvedimenti.csv"
+  - name: tar_abruzzo_l_aquila
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-abruzzo-l-aquila-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_abruzzo_l_aquila_provvedimenti.csv"
+  - name: tar_abruzzo_pescara
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-abruzzo-pescara-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_abruzzo_pescara_provvedimenti.csv"
+  - name: tar_basilicata
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-basilicata-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_basilicata_provvedimenti.csv"
+  - name: tar_calabria_catanzaro
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-calabria-catanzaro-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_calabria_catanzaro_provvedimenti.csv"
+  - name: tar_calabria_reggio_calabria
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-calabria-reggio-calabria-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_calabria_reggio_calabria_provvedimenti.csv"
+  - name: tar_campania_napoli
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-campania-napoli-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_campania_napoli_provvedimenti.csv"
+  - name: tar_campania_salerno
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-campania-salerno-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_campania_salerno_provvedimenti.csv"
+  - name: tar_emilia_romagna_bologna
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-emilia-romagna-bologna-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_emilia_romagna_bologna_provvedimenti.csv"
+  - name: tar_emilia_romagna_parma
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-emilia-romagna-parma-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_emilia_romagna_parma_provvedimenti.csv"
+  - name: tar_friuli_venezia_giulia
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-friuli-venezia-giulia-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_friuli_venezia_giulia_provvedimenti.csv"
+  - name: tar_lazio_latina
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-lazio-latina-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_lazio_latina_provvedimenti.csv"
+  - name: tar_lazio_roma
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-lazio-roma-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_lazio_roma_provvedimenti.csv"
+  - name: tar_liguria
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-liguria-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_liguria_provvedimenti.csv"
+  - name: tar_lombardia_brescia
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-lombardia-brescia-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_lombardia_brescia_provvedimenti.csv"
+  - name: tar_lombardia_milano
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-lombardia-milano-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_lombardia_milano_provvedimenti.csv"
+  - name: tar_marche
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-marche-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_marche_provvedimenti.csv"
+  - name: tar_molise
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-molise-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_molise_provvedimenti.csv"
+  - name: tar_piemonte
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-piemonte-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_piemonte_provvedimenti.csv"
+  - name: tar_puglia_bari
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-puglia-bari-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_puglia_bari_provvedimenti.csv"
+  - name: tar_puglia_lecce
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-puglia-lecce-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_puglia_lecce_provvedimenti.csv"
+  - name: tar_sardegna
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-sardegna-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_sardegna_provvedimenti.csv"
+  - name: tar_sicilia_catania
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-sicilia-catania-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_sicilia_catania_provvedimenti.csv"
+  - name: tar_sicilia_palermo
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-sicilia-palermo-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_sicilia_palermo_provvedimenti.csv"
+  - name: tar_toscana
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-toscana-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_toscana_provvedimenti.csv"
+  - name: tar_umbria
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-umbria-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_umbria_provvedimenti.csv"
+  - name: tar_valle_d_aosta
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-valle-d-aosta-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_valle_d_aosta_provvedimenti.csv"
+  - name: tar_veneto
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-veneto-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_veneto_provvedimenti.csv"
+  - name: trga_bolzano
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "trga-bolzano-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "trga_bolzano_provvedimenti.csv"
+  - name: trga_trento
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "trga-trento-provvedimenti-pubblicati"
+      download_all: true
+      prefer_datastore: false
+      filename: "trga_trento_provvedimenti.csv"
 
 clean:
   read:

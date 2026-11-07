@@ -2,8 +2,8 @@
 
 ## Architettura
 
-31 package CKAN paralleli. Prefetch `--type ricorsi-tipo-decisione` concatena
-tutte le risorse CSV (`2017-2024` bulk + `2025` + `2026`).
+31 source CKAN native, una per sede. `download_all: true` scarica tutte le
+risorse CSV (`2017-2024` bulk + `2025` + `2026`).
 
 ## Tipo di dato
 

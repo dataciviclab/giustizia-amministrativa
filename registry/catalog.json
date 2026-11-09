@@ -1,6 +1,6 @@
 {
   "source_id": "openga",
-  "generated_at": "2026-11-02T12:53:50+00:00",
+  "generated_at": "2026-11-09T13:22:14+00:00",
   "report_version": 1,
   "timing": {},
   "identity": {
@@ -11,19 +11,21 @@
     "observation_mode": "catalog-watch",
     "verdict": "go",
     "note": "CKAN Giustizia Amministrativa. Il portale e' 10 temi giuridici x ~40 corti/distretti (~400 package) + calendari udienze (~60, non nostri). I nostri 12 dataset curati coprono il 100% dei temi giuridici: items nel catalog = bacino monitorato, non quota usata. Drift utile = package dei nostri temi che spariscono.",
-    "last_probed": "2026-11-02"
+    "last_probed": "2026-11-09"
   },
   "health": {
     "radar_status": "GREEN",
     "http_code": "200",
     "note": null,
     "ssl_fallback": false,
-    "streak": 10
+    "streak": 11
   },
   "inventory": {
     "total_items": 436,
+    "active_items": 436,
+    "stale_items": 0,
     "method": null,
-    "captured_at": "2026-11-02T12:49:49+00:00",
+    "captured_at": "2026-11-09T13:17:27+00:00",
     "baseline_value": null,
     "baseline_date": null,
     "freshness_hours": 0.1,
@@ -34,12 +36,12 @@
     }
   },
   "source_check": {
-    "last_run": "2026-11-02T12:53:50Z",
+    "last_run": "2026-11-09T13:22:14Z",
     "total_scored": 405,
-    "reachable": 405,
+    "reachable": 250,
     "csv_count": 405,
-    "with_csv_schema": 405,
-    "avg_readiness": 9.1,
+    "with_csv_schema": 246,
+    "avg_readiness": 5.9,
     "top_items": [
       {
         "name": "openga/cga-sicilia-ricorsi-pervenuti-in-materia-dappalto",
@@ -92,11 +94,17 @@
         "reachable": true
       }
     ],
-    "coverage_pct": 92.9,
+    "not_checked_non_csv": 0,
+    "blocked_items": 0,
+    "validation_skipped": 0,
+    "catalog_only": false,
+    "probeable_items": 405,
+    "reachability_pct": 61.7,
+    "coverage_pct": 100.0,
     "formato_aperto": {
-      "score": 5.0,
-      "perc_aperto": 0.0,
-      "perc_reachable": 100.0,
+      "score": 90.0,
+      "perc_aperto": 100.0,
+      "perc_reachable": 61.7,
       "total": 405,
       "fonte": "source_check"
     }

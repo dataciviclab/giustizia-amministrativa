@@ -2,8 +2,9 @@
 
 ## Architettura
 
-Prefetch `--type ricorsi-pervenuti-class` concatena tutte le risorse CSV
-delle 31 sedi (bulk `2017-2024` + `2025` + `2026`) in un unico `raw_input.csv`.
+31 source CKAN native, una per sede (`download_all: true`, `prefer_datastore: false`).
+Il RAW produce un CSV per sede; `clean.read.mode: all` + `union_by_name=true`
+fondono i file nella vista `raw_input`.
 
 ## Codelist sedi (contratto nome_sede)
 
@@ -21,7 +22,7 @@ Se OpenGA aggiunge una sede o cambia un codice:
 
 ## Volumi
 
-Serie storica completa nel clean anche con `years: [2026]` (prefetch multi-risorsa).
+Serie storica completa nel clean anche con `years: [2026]` (`download_all` multi-risorsa).
 
 ## Join
 

@@ -17,7 +17,6 @@ jobs:
     with:
       repo-slug: "giustizia-amministrativa"
       run-command: "make run-all && python -m pytest tests/ dashboard/tests -q"
-      extra-env: "TOOLKIT_ALLOW_SCRIPT_SOURCE=1"
     permissions:
       contents: write
       pull-requests: write

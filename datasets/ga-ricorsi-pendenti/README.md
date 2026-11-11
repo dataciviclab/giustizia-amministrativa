@@ -6,8 +6,8 @@
 
 ## Fonte
 
-OpenGA CKAN: `{sede}-ricorsi-pendenti-per-periodo` per tutte le 33 sedi
-(CdS ×2 codici — giurisdizionale/consultivo —, CGA ×2, TAR, TRGA).
+OpenGA CKAN: `{sede}-ricorsi-pendenti-per-periodo` per tutte le 31 sedi
+(CdS e CGA includono entrambi i codici, giurisdizionale/consultivo).
 
 **Copertura reale della fonte: 2020-2023 + 2025-2026** — le risorse
 "2017-2024" in CKAN contengono di fatto solo 2020-2023; **il 2024 manca

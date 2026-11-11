@@ -1,8 +1,8 @@
 ## Tecnico
 
-- Source type: `ckan` con 30 source fissi + 3 per-anno per Valle d'Aosta (nessun dato 2023)
-- Ogni source scarica il CSV via DataStore CKAN, schema identico per tutte le 31 sedi
-- Clean.sql: glob merge con `union_by_name=true`, macro standard (`cast_bigint`, `normalize_string`, `normalize_italian_number`)
+- 31 source `ckan` (`download_all: true`), una per sede
+- Ogni source scarica i CSV diretti (`prefer_datastore: false`), schema identico per tutte le 31 sedi
+- Clean.sql: `clean.read.mode: all` + `union_by_name=true`, macro standard (`cast_bigint`, `normalize_string`, `cast_double`)
 - TAR Valle d'Aosta: solo 2024-2026 (9 risorse vs 12 delle altre sedi)
 - Frequenza mensile: i dati vengono aggiornati ogni mese dalla fonte
 - Granularità: singolo ricorso (record-level)
@@ -20,7 +20,7 @@
 ## Cautele
 
 - I dettagli economici/geografici sono quasi sempre null — il dataset dà il CIG e la classificazione, ma per importi/enti/territorio serve join con ANAC
-- La serie storica 2023 è in formato DataStore dump (con `_id`), anni successivi in upload standard — i dati sono omogenei ma la struttura raw differisce
+- La serie storica 2023 è parziale (182 ricorsi), non confrontabile con gli anni successivi
 - `DATA_SCADENZA_OFFERTA` e `DATA_PUBBLICAZIONE` talvolta vuote
 - L'`ANNO_DEPOSITO_RICORSO` nei file recenti può includere ricorsi depositati in anni precedenti
 - PK non dichiarabile: stessi `(sede, numero_ricorso)` possono avere CIG diversi (un ricorso può riguardare più gare/lotti)

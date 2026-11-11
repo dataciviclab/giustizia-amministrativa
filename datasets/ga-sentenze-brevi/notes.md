@@ -2,8 +2,8 @@
 
 ## Architettura
 
-31 package CKAN paralleli. Prefetch `--type sentenze-brevi` concatena tutte le
-risorse CSV (`2017-2024` bulk + `2025` + `2026`) in un unico `raw_input.csv`.
+31 source CKAN native, una per sede. `download_all: true` scarica tutte le
+risorse CSV (`2017-2024` bulk + `2025` + `2026`); il RAW produce un CSV per sede.
 
 ## Tipo di dato
 
@@ -31,4 +31,4 @@ Altri valori potrebbero comparire in futuro: non hardcodare filtri stretti.
 - La risorsa multi-anno `2017-2024` è bulk: non deduplicare per file anno
 - `NUMERO_SENTENZE` è un conteggio già aggregato — mai contare le righe raw
 - Config runna `years: [2026]` ma il clean contiene la serie completa
-  (pattern prefetch del repo)
+  (pattern `download_all` del repo)

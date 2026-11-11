@@ -15,13 +15,23 @@ dataset:
 raw:
   output_policy: overwrite
   sources:
-  - name: openga
-    type: script
+  - name: cds
+    type: ckan
     args:
-      command: "python ../../prefetch.py raw_input.csv --type pareri"
-      output: raw_input.csv
-      filename: raw_input.csv
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "cds-pareri"
+      download_all: true
+      prefer_datastore: false
+      filename: "cds_pareri.csv"
     primary: true
+  - name: cga_sicilia
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "cga-sicilia-pareri"
+      download_all: true
+      prefer_datastore: false
+      filename: "cga_sicilia_pareri.csv"
 
 clean:
   read:

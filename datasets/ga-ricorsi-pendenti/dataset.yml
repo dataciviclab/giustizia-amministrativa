@@ -16,13 +16,255 @@ dataset:
 raw:
   output_policy: overwrite
   sources:
-  - name: openga
-    type: script
+  - name: cds
+    type: ckan
     args:
-      command: "python ../../prefetch.py raw_input.csv --type ricorsi-pendenti"
-      output: raw_input.csv
-      filename: raw_input.csv
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "cds-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "cds_ricorsi-pendenti.csv"
     primary: true
+  - name: cga_sicilia
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "cga-sicilia-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "cga_sicilia_ricorsi-pendenti.csv"
+  - name: tar_abruzzo_l_aquila
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-abruzzo-l-aquila-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_abruzzo_l_aquila_ricorsi-pendenti.csv"
+  - name: tar_abruzzo_pescara
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-abruzzo-pescara-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_abruzzo_pescara_ricorsi-pendenti.csv"
+  - name: tar_basilicata
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-basilicata-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_basilicata_ricorsi-pendenti.csv"
+  - name: tar_calabria_catanzaro
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-calabria-catanzaro-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_calabria_catanzaro_ricorsi-pendenti.csv"
+  - name: tar_calabria_reggio_calabria
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-calabria-reggio-calabria-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_calabria_reggio_calabria_ricorsi-pendenti.csv"
+  - name: tar_campania_napoli
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-campania-napoli-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_campania_napoli_ricorsi-pendenti.csv"
+  - name: tar_campania_salerno
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-campania-salerno-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_campania_salerno_ricorsi-pendenti.csv"
+  - name: tar_emilia_romagna_bologna
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-emilia-romagna-bologna-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_emilia_romagna_bologna_ricorsi-pendenti.csv"
+  - name: tar_emilia_romagna_parma
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-emilia-romagna-parma-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_emilia_romagna_parma_ricorsi-pendenti.csv"
+  - name: tar_friuli_venezia_giulia
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-friuli-venezia-giulia-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_friuli_venezia_giulia_ricorsi-pendenti.csv"
+  - name: tar_lazio_latina
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-lazio-latina-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_lazio_latina_ricorsi-pendenti.csv"
+  - name: tar_lazio_roma
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-lazio-roma-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_lazio_roma_ricorsi-pendenti.csv"
+  - name: tar_liguria
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-liguria-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_liguria_ricorsi-pendenti.csv"
+  - name: tar_lombardia_brescia
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-lombardia-brescia-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_lombardia_brescia_ricorsi-pendenti.csv"
+  - name: tar_lombardia_milano
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-lombardia-milano-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_lombardia_milano_ricorsi-pendenti.csv"
+  - name: tar_marche
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-marche-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_marche_ricorsi-pendenti.csv"
+  - name: tar_molise
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-molise-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_molise_ricorsi-pendenti.csv"
+  - name: tar_piemonte
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-piemonte-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_piemonte_ricorsi-pendenti.csv"
+  - name: tar_puglia_bari
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-puglia-bari-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_puglia_bari_ricorsi-pendenti.csv"
+  - name: tar_puglia_lecce
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-puglia-lecce-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_puglia_lecce_ricorsi-pendenti.csv"
+  - name: tar_sardegna
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-sardegna-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_sardegna_ricorsi-pendenti.csv"
+  - name: tar_sicilia_catania
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-sicilia-catania-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_sicilia_catania_ricorsi-pendenti.csv"
+  - name: tar_sicilia_palermo
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-sicilia-palermo-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_sicilia_palermo_ricorsi-pendenti.csv"
+  - name: tar_toscana
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-toscana-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_toscana_ricorsi-pendenti.csv"
+  - name: tar_umbria
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-umbria-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_umbria_ricorsi-pendenti.csv"
+  - name: tar_valle_d_aosta
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-valle-d-aosta-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_valle_d_aosta_ricorsi-pendenti.csv"
+  - name: tar_veneto
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "tar-veneto-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "tar_veneto_ricorsi-pendenti.csv"
+  - name: trga_bolzano
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "trga-bolzano-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "trga_bolzano_ricorsi-pendenti.csv"
+  - name: trga_trento
+    type: ckan
+    args:
+      portal_url: "https://openga.giustizia-amministrativa.it"
+      dataset_id: "trga-trento-ricorsi-pendenti-per-periodo"
+      download_all: true
+      prefer_datastore: false
+      filename: "trga_trento_ricorsi-pendenti.csv"
 
 clean:
   read:

@@ -14,7 +14,9 @@ con un bias crescente nel tempo.
 3. ga_cross.definiti == ga_definizioni.rd_definiti (stessa regola sui due compose)
 4. Il totale definiti resta entro il 12% dal tema ufficiale tipo-decisione
 
-I test sui parquet si skippano se out/ non esiste (PR solo config).
+I parquet si leggono con duckdb: e' l'unica dipendenza dichiarata del repo
+(pandas/pyarrow non sono installati nel job Pipeline). I test sui dati si
+skippano se out/ non esiste (PR solo config).
 """
 
 from __future__ import annotations
@@ -66,10 +68,14 @@ def _mart(slug: str, name: str) -> Path | None:
     return files[-1] if files else None
 
 
-def _read(path: Path):
-    import pandas as pd
+def _rows(sql: str, params: tuple[Path, ...] = ()) -> list[tuple]:
+    import duckdb
 
-    return pd.read_parquet(path)
+    con = duckdb.connect()
+    try:
+        return con.execute(sql, [str(p) for p in params]).fetchall()
+    finally:
+        con.close()
 
 
 def _canonical(esito: str) -> str:
@@ -95,56 +101,82 @@ def test_clean_esiti_are_all_codelisted() -> None:
     path = _parquet(CLEAN, "ga_ricorsi_definiti")
     if path is None:
         pytest.skip("clean ga_ricorsi_definiti non presente")
-    frame = _read(path)
     mapping = _load_codelist()
-    observed = {_canonical(esito) for esito in frame["esito_provvedimento"].dropna().unique()}
+
+    observed = {
+        _canonical(row[0])
+        for row in _rows(
+            "SELECT DISTINCT esito_provvedimento FROM read_parquet(?)", (path,)
+        )
+        if row[0] is not None
+    }
     unmapped = sorted(observed - set(mapping))
     assert not unmapped, f"esiti non mappati in codelist: {unmapped}"
-    assert frame["esito_definitorio"].isna().sum() == 0, "esito_definitorio con NULL"
-    # il flag pubblicato deve essere coerente con la codelist
-    for esito, flag in mapping.items():
-        rows = frame[frame["esito_provvedimento"].map(_canonical) == esito]
-        if not len(rows):
-            continue
-        assert set(rows["esito_definitorio"].unique()) == {bool(flag)}, (
-            f"flag incoerente per {esito!r}"
+
+    nulli, = _rows(
+        "SELECT count(*) FILTER (WHERE esito_definitorio IS NULL) FROM read_parquet(?)",
+        (path,),
+    )[0]
+    assert nulli == 0, "esito_definitorio con NULL"
+
+    # un esito (canonicalizzato) deve avere un solo flag pubblicato
+    by_esito: dict[str, set[bool]] = {}
+    for esito, flag in _rows(
+        """
+        SELECT esito_provvedimento, bool_or(esito_definitorio)
+        FROM read_parquet(?)
+        GROUP BY esito_provvedimento
+        """,
+        (path,),
+    ):
+        by_esito.setdefault(_canonical(esito), set()).add(bool(flag))
+    for esito, flags in by_esito.items():
+        assert len(flags) == 1, f"flag incoerente per {esito!r}: {flags}"
+        assert flags == {bool(mapping[esito])}, (
+            f"esito {esito!r}: clean dice {flags}, codelist dice {mapping[esito]}"
         )
 
 
-@pytest.mark.contract
 @pytest.mark.regression
 def test_definiti_aligned_between_composes() -> None:
-    panorama_path = _mart("ga_cross", "mart_panoramica")
-    mezzi_path = _mart("ga_definizioni", "mart_mezzi_anno")
-    if panorama_path is None or mezzi_path is None:
+    panorama = _mart("ga_cross", "mart_panoramica")
+    mezzi = _mart("ga_definizioni", "mart_mezzi_anno")
+    if panorama is None or mezzi is None:
         pytest.skip("mart compose non presenti")
-    panorama = _read(panorama_path)
-    mezzi = _read(mezzi_path)
-    joined = panorama[["anno", "totale_definiti"]].merge(mezzi[["anno", "rd_definiti"]], on="anno")
-    assert len(joined) > 0
-    for row in joined.itertuples():
-        assert abs(row.totale_definiti - row.rd_definiti) <= 1, (
-            f"{row.anno}: ga_cross.definiti={row.totale_definiti} "
-            f"!= ga_definizioni.rd_definiti={row.rd_definiti}"
-        )
+    anni, delta = _rows(
+        """
+        SELECT count(*), max(abs(p.totale_definiti - m.rd_definiti))
+        FROM read_parquet(?) AS p
+        JOIN read_parquet(?) AS m USING (anno)
+        """,
+        (panorama, mezzi),
+    )[0]
+    assert anni > 0
+    assert delta <= 1, f"ga_cross.definiti e ga_definizioni.rd_definiti divergono di {delta}"
 
 
-@pytest.mark.contract
 @pytest.mark.regression
 def test_definiti_within_tolerance_of_official_theme() -> None:
-    panorama_path = _mart("ga_cross", "mart_panoramica")
+    panorama = _mart("ga_cross", "mart_panoramica")
     official = _parquet(CLEAN, "ga_ricorsi_tipo_decisione")
-    if panorama_path is None or official is None:
+    if panorama is None or official is None:
         pytest.skip("mart ga_cross o clean tipo-decisione non presenti")
-    panorama = _read(panorama_path)
-    frame = _read(official)
-    totals = frame.groupby("anno")["totale_definiti"].sum()
-    for row in panorama.itertuples():
-        expected = totals.get(row.anno)
-        if expected is None or not expected:
-            continue
-        delta = (row.totale_definiti / expected - 1) * 100
-        assert abs(delta) <= RESIDUAL_TOLERANCE_PCT, (
-            f"{row.anno}: definiti {row.totale_definiti} vs ufficiale {expected:.0f} "
-            f"({delta:+.1f}%, tolleranza {RESIDUAL_TOLERANCE_PCT}%)"
+    peggiore, anno_peggiore = _rows(
+        """
+        WITH official AS (
+            SELECT anno, sum(totale_definiti) AS ufficiale
+            FROM read_parquet(?)
+            GROUP BY anno
         )
+        SELECT max(abs(p.totale_definiti / official.ufficiale - 1) * 100) AS delta,
+               arg_max(p.anno, abs(p.totale_definiti / official.ufficiale - 1)) AS anno
+        FROM read_parquet(?) AS p
+        JOIN official USING (anno)
+        """,
+        (official, panorama),
+    )[0]
+    assert peggiore is not None
+    assert peggiore <= RESIDUAL_TOLERANCE_PCT, (
+        f"{anno_peggiore}: definiti fuori tolleranza ({peggiore:.1f}% "
+        f"vs {RESIDUAL_TOLERANCE_PCT}%)"
+    )

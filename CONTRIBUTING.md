@@ -14,7 +14,7 @@ Grazie per il tuo interesse! Ecco come contribuire.
 ```bash
 git clone https://github.com/dataciviclab/giustizia-amministrativa.git
 cd giustizia-amministrativa
-pip install -r requirements.txt
+pip install -e ".[dev,pipeline]"
 make check
 ```
 
@@ -24,6 +24,27 @@ make check
 2. Fai le tue modifiche
 3. Verifica: `make check`
 4. Apri una PR seguendo il template
+5. **Prima del merge**, se hai toccato `datasets/`, `compose/` o `tests/`,
+   lancia la pipeline sul branch (vedi sotto)
+
+### Pipeline pre-merge
+
+Il workflow `Pipeline` **non gira sulle PR**: parte su `pull_request: closed`
+(post-merge), sullo schedule mensile o su `workflow_dispatch`. Per non
+scoprire i rossi dopo il merge, va lanciato a mano sul branch:
+
+```bash
+gh workflow run pipeline.yml --ref <branch>
+gh run list --workflow=pipeline.yml --branch <branch> --limit 1
+```
+
+Il job esegue `make run-all && python -m pytest tests/ dashboard/tests -q`.
+Richiede i secret GCP (presenti per i branch del repo).
+
+Nota per i test: il job Pipeline installa `.[dev,pipeline]` e **non** ha
+pandas/pyarrow. I test che leggono parquet devono usare `duckdb`
+(vedi `tests/test_sede_names_contract.py` come riferimento), non
+`pandas.read_parquet`.
 
 ## Standard
 

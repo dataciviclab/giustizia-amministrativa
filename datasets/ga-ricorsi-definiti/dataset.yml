@@ -37,12 +37,14 @@ clean:
   - classificazione_ricorso
   - esito_provvedimento
   - numero_ricorsi_definiti
+  - esito_definitorio
   sql: sql/clean.sql
   validate:
     min_rows: 100
     not_null:
-    - anno_sentenza
+    - anno
     - numero_ricorsi_definiti
+    - esito_definitorio
 
 mart:
   tables:

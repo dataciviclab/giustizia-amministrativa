@@ -1,0 +1,111 @@
+root: ../../out
+schema_version: 1
+
+dataset:
+  name: ga_atti
+  source_id: dataciviclab_composite
+  tags: [giustizia, ga, compose, atti, durata]
+  category: giustizia
+  description: "Compose GA: un provvedimento pubblicato per riga (sentenza, ordinanza, decreto, parere) con la durata del ricorso dalla data di deposito alla pubblicazione dell'atto che lo definisce."
+  years: [2026]
+  time_coverage:
+    mode: snapshot
+
+# Compose al grano ATTO. I quattro dataset atti hanno schema identico
+# (stesso clean.sql nei dataset, testato) e vengono uniti con tipo_atto.
+# Serve a: (a) un solo punto per durate ed esiti invece di 8 mart duplicati,
+# (b) durata del ricorso amministrativo (nel repo del civile esiste
+# durata_civile, qui mancava).
+# Eseguire prima: toolkit run per datasets/ga-sentenze, ga-ordinanze,
+# ga-decreti, ga-pareri.
+
+raw:
+  output_policy: overwrite
+  sources:
+    - name: sentenze
+      type: local_file
+      args:
+        path: "../../out/data/clean/ga_sentenze/2026/ga_sentenze_2026_clean.parquet"
+        filename: sentenze.parquet
+      primary: true
+
+support:
+  - type: dataset
+    name: ordinanze
+    config: ../../datasets/ga-ordinanze/dataset.yml
+    years: [2026]
+  - type: dataset
+    name: decreti
+    config: ../../datasets/ga-decreti/dataset.yml
+    years: [2026]
+  - type: dataset
+    name: pareri
+    config: ../../datasets/ga-pareri/dataset.yml
+    years: [2026]
+
+clean:
+  sql: "sql/clean.sql"
+  read:
+    source: config_only
+    mode: latest
+  required_columns:
+    - anno
+    - codice_sede
+    - nome_sede
+    - tipo_atto
+    - numero_provvedimento
+    - numero_ricorso
+    - flg_definisce
+    - durata_giorni
+  validate:
+    not_null:
+      - anno
+      - codice_sede
+      - tipo_atto
+    min_rows: 100000
+
+mart:
+  tables:
+    - name: mart_durata_sede
+      sql: "sql/mart_durata_sede.sql"
+    - name: mart_durata_anno
+      sql: "sql/mart_durata_anno.sql"
+    - name: mart_esiti_per_tipo_atto
+      sql: "sql/mart_esiti_per_tipo_atto.sql"
+  required_tables:
+    - mart_durata_sede
+    - mart_durata_anno
+    - mart_esiti_per_tipo_atto
+  validate:
+    table_rules:
+      mart_durata_sede:
+        required_columns:
+          - anno
+          - codice_sede
+          - tipo_atto
+          - n_ricorsi_definiti
+          - durata_mediana_giorni
+        primary_key: [anno, codice_sede, tipo_atto]
+        min_rows: 100
+      mart_durata_anno:
+        required_columns:
+          - anno
+          - tipo_atto
+          - n_ricorsi_definiti
+          - durata_mediana_giorni
+        primary_key: [anno, tipo_atto]
+        min_rows: 10
+      mart_esiti_per_tipo_atto:
+        required_columns:
+          - anno
+          - tipo_atto
+          - esito_provvedimento
+          - n_atti
+        primary_key: [anno, tipo_atto, esito_provvedimento]
+        min_rows: 50
+
+duckdb:
+  memory_limit: "2GB"
+
+validation:
+  fail_on_error: true

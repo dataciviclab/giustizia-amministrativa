@@ -1,11 +1,11 @@
 # Giustizia Amministrativa — OpenGA
 
-**Contenzioso, sentenze e provvedimenti della Giustizia Amministrativa italiana — 31 sedi, 2017-2026.**
+**Contenzioso, sentenze e provvedimenti della Giustizia Amministrativa italiana — 33 sedi, 2017-2026.**
 
 Sistema di intelligence sulla giustizia amministrativa: raccoglie i dati ufficiali dal portale [OpenGA](https://openga.giustizia-amministrativa.it), li trasforma in mart analitici e li rende interrogabili via dashboard Streamlit.
 
 - **Fonte**: [OpenGA - Giustizia Amministrativa](https://openga.giustizia-amministrativa.it)
-- **Copertura**: 2017-2026, Italia (31 sedi: CdS, CGA Sicilia, 27 TAR, 2 TRGA)
+- **Copertura**: 2017-2026, Italia (33 sedi: CdS e CGA Sicilia giurisdizionali + consultive, 27 TAR, 2 TRGA)
 - **Unità di analisi**: Ricorso, Sentenza, Decreto, Ordinanza
 - **Licenza**: CC BY 4.0
 - **Output pubblico**: Dashboard Streamlit + Discussion
@@ -21,6 +21,8 @@ Sistema di intelligence sulla giustizia amministrativa: raccoglie i dati ufficia
 7. **Qual è il backlog di ricorsi pendenti?** → stock mensile per tutte le sedi (`ga-ricorsi-pendenti`)
 8. **Com'è composto il contenzioso sugli appalti?** → ricorsi appalto con CIG (joinabile con ANAC)
 9. **Quanto tempo impiegano le sezioni consultive?** → pareri CdS/CGA con lag deposito→pubblicazione (`ga-pareri`)
+10. **Quanto dura un ricorso amministrativo?** → durata deposito→decisione per sede e tipo di atto (compose `ga-atti`)
+11. **Come finiscono i ricorsi sugli appalti?** → esiti e durata per settore/provincia con CIG e stazione appaltante (compose `ga-appalti-contenzioso`)
 
 ## Dataset
 
@@ -37,8 +39,10 @@ Sistema di intelligence sulla giustizia amministrativa: raccoglie i dati ufficia
 | `ga-sentenze-brevi` | Sentenze brevi vs piene per materia | 2017-2026 | 2 |
 | `ga-ricorsi-tipo-decisione` | Definizioni per meccanismo (sentenza/decreto/altro) | 2017-2026 | 2 |
 | `ga-ricorsi-pendenti` | Stock mensile pendenti per tutte le 33 sedi | 2020-2026* | 2 |
-| `compose/ga-cross` | Compose: flusso pervenuti → definiti → esito + mix brevi + stock pendenti (grano materia/flusso) | 2017-2026 | 4 |
+| `compose/ga-cross` | Compose: flusso pervenuti → definiti → esito + mix brevi + stock pendenti (grano materia/flusso) | 2017-2026 | 5 |
 | `compose/ga-definizioni` | Compose: mezzi di definizione per sede×anno | 2017-2026 | 3 |
+| `compose/ga-atti` | Compose: un provvedimento per riga con durata deposito→decisione | 2017-2026 | 3 |
+| `compose/ga-appalti-contenzioso` | Compose: ricorsi appalti × atti che li decidono (esiti, durata, settore) | 2017-2026 | 2 |
 
 \* Copertura reale della fonte OpenGA: 2020-2023 + 2025-2026 (2024 assente, gap di pubblicazione).
 
@@ -46,7 +50,7 @@ Sistema di intelligence sulla giustizia amministrativa: raccoglie i dati ufficia
 
 **Per dataset**: 2 mart cadauno (per sede + per tipo/classificazione)
 
-**Compose**: `ga_cross` (panoramica, flusso sede, esiti+materia, **stock pendente per sede**) · `ga_definizioni` (mezzi anno, sintesi sede, outlier)
+**Compose**: `ga_cross` (panoramica, flusso sede, esiti+materia, **stock pendente per sede**, **split giurisdizionale/consultivo**) · `ga_definizioni` (mezzi anno, sintesi sede, outlier) · `ga_atti` (durata per sede e per anno, esiti per tipo di atto) · `ga_appalti_contenzioso` (esiti e durata dei ricorsi appalti per settore e provincia)
 
 ## Dashboard
 

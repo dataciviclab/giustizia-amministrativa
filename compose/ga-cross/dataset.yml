@@ -26,6 +26,11 @@ raw:
       primary: true
 
 support:
+  # Codelist sedi (nome canonico + tipo_sede): vive nel dataset che la possiede
+  # ed e' esposta qui come file support, non con path hardcoded nel SQL.
+  - type: file
+    name: sedi
+    path: "../../datasets/ga-ricorsi-pervenuti-class/data/sedi_canonici.csv"
   - type: dataset
     name: definiti
     config: ../../datasets/ga-ricorsi-definiti/dataset.yml
@@ -35,10 +40,6 @@ support:
   - type: dataset
     name: sentenze_brevi
     config: ../../datasets/ga-sentenze-brevi/dataset.yml
-    years: [2026]
-  - type: dataset
-    name: provvedimenti
-    config: ../../datasets/ga-provvedimenti/dataset.yml
     years: [2026]
   # Stock pendenti per sede/anno — solo marts (nessun uso nel clean:
   # il pendente non ha grano materia). Gap fonte: assente 2017-2019 e 2024.
@@ -56,9 +57,11 @@ clean:
     - anno
     - codice_sede
     - nome_sede
+    - tipo_sede
     - classificazione_ricorso
     - pervenuti
     - definiti
+    - esiti_interlocutori
     - sentenze
     - sentenze_brevi
     - sentenze_piene
@@ -80,11 +83,14 @@ mart:
       sql: "sql/mart_esiti.sql"
     - name: mart_sede_stock
       sql: "sql/mart_sede_stock.sql"
+    - name: mart_panoramica_tipo_sede
+      sql: "sql/mart_panoramica_tipo_sede.sql"
   required_tables:
     - mart_panoramica
     - mart_sede_flusso
     - mart_esiti
     - mart_sede_stock
+    - mart_panoramica_tipo_sede
   validate:
     table_rules:
       mart_panoramica:
@@ -95,6 +101,14 @@ mart:
         min_rows: 10
       mart_sede_stock:
         min_rows: 10
+      mart_panoramica_tipo_sede:
+        required_columns:
+          - anno
+          - tipo_sede
+          - totale_pervenuti
+          - totale_definiti
+        primary_key: [anno, tipo_sede]
+        min_rows: 2
 
 duckdb:
   memory_limit: "2GB"

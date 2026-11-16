@@ -11,6 +11,7 @@ SELECT
     decreto_pct,
     altri_pct,
     rd_definiti,
+    rd_esiti_interlocutori,
     rd_accoglimenti,
     rd_rigetti,
     tasso_accoglimento,

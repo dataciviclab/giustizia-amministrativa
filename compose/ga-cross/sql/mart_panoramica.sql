@@ -1,9 +1,12 @@
 -- Panoramica annuale: totals per anno
 -- sentenze/brevi/piene sono al grano materia: le somme sono valide
+-- definiti = solo esiti definitori; esiti_interlocutori e' il volume escluso
+-- (provvedimenti interlocutori registrati, non ricorsi distinti)
 SELECT
     anno,
     SUM(pervenuti) AS totale_pervenuti,
     SUM(definiti) AS totale_definiti,
+    SUM(esiti_interlocutori) AS totale_esiti_interlocutori,
     SUM(sentenze) AS totale_sentenze,
     SUM(sentenze_brevi) AS totale_sentenze_brevi,
     SUM(sentenze_piene) AS totale_sentenze_piene,

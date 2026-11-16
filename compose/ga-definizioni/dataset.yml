@@ -47,6 +47,8 @@ clean:
     - definiti_decreto_decisori
     - definiti_altri
     - totale_definiti
+    - rd_definiti
+    - rd_esiti_interlocutori
   validate:
     not_null:
       - anno

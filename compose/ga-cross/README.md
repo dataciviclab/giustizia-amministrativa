@@ -88,6 +88,16 @@ Il flag arriva dalla codelist sedi
 `tipo_sede`), esposta in questo compose come support `file` e non come path
 hardcoded nel SQL.
 
+## Deriva tassonomia materia (2022)
+
+`classificazione_ricorso` non è stabile: ~1.000 valori fino al 2021, 1.329 nel
+2022. Il FULL JOIN tiene i totali, ma il match ponderato dei definiti scende
+al **66,5%** nel 2022 (90-95% negli altri anni) e le materie cambiano nome.
+Esempio: le classificazioni `APPALTI PUBBLICI ...` si azzerano dal 2022 mentre
+i ricorsi appalti restano ~3.000/anno — per quel dominio usare
+`compose/ga-appalti-contenzioso`. Dettaglio e numeri in
+`datasets/ga-ricorsi-pervenuti-class/notes.md`.
+
 ## FULL JOIN: righe non appaiate preservate
 
 Definiti e sentenze sono joinati a FULL (non LEFT): le righe la cui combinazione

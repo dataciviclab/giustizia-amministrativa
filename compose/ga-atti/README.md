@@ -42,6 +42,21 @@ chiude il ricorso — la stessa logica dei cruscotti di settore.
 
 Un ricorso definito da più atti conta una volta (MIN della durata per ricorso).
 
+## Qualità del dato (verificata sul run 2026)
+
+| Controllo | Esito |
+|---|---|
+| righe per `tipo_atto` vs dataset sorgente | identiche, nessun doppio conteggio |
+| coerenza `tipo_atto` × `tipo_provvedimento` | pulita (sentenza↔SENTENZA/BREVE, decreto↔DECRETO *, ordinanza↔ORDINANZA *) |
+| copertura `durata_giorni` | sentenze 99,0%, pareri 80,4%, decreti 62,7%, ordinanze 6,0% (solo gli atti che definiscono) |
+| date di deposito placeholder (01-01) | 135 righe su 704.663 con durata (0,02%) — non spostano le mediane |
+| durate estreme | legittime: ricorsi depositati 1979-1999 ancora definiti (`numero_ricorso` codifica l'anno di deposito). 42.119 atti oltre 10 anni, 2.802 oltre 20 |
+| durata 0 giorni | 131 atti con pubblicazione = deposito |
+
+**2026 è parziale**: contiene solo gli atti pubblicati fino al run, quindi
+favorisce i ricorsi decisi in fretta e la mediana dell'anno è sottostimata.
+Non usarlo per confronti di serie.
+
 ## Segnale che abilita (2017 → 2025, sentenze)
 
 | anno | ricorsi definiti | durata mediana | p90 |

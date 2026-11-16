@@ -61,6 +61,20 @@ Lo stesso ricorso può comparire su più righe in `openga_ricorsi_appalto`
 Limite di fonte: `provincia` e `settore` mancano per molti ricorsi
 (18.364 su 29.029 senza provincia) → riga `NON DISPONIBILE` nei mart.
 
+## Qualità del dato (verificata sul run 2026)
+
+| Controllo | Esito |
+|---|---|
+| copertura decisioni per anno | 91-97% sul 2018-2025; **65,2% sul 2026** (atti non ancora pubblicati); 2017 praticamente vuoto (1 ricorso) |
+| composizione esiti | ACCOGLIE 16-20%, RESPINGE 37-46%, ALTRO 32-39% (esiti non di merito: inammissibile, improcedibile, perenzione) |
+| tasso di accoglimento | ~31% calcolato su accoglie/(accoglie+respinge), non sul totale |
+| settore disponibile | 57% dei ricorsi (SETTORI ORDINARI 15.236, SPECIALI 1.522) |
+| importo gara | p50 6,0 mln, p99 1,6 mld, max 14,7 mld: **non validati**, ci sono outlier di fonte. Usare mediane, non medie |
+| ricorsi multi-gara | 27.283 con 1 CIG, 1.744 con più CIG (max 127 righe per un ricorso) |
+
+**2017 e 2026 non sono anni pieni**: il primo è il primo anno della fonte, il
+secondo è in corso. Per i trend usare 2018-2025.
+
 ## Esecuzione
 
 ```bash

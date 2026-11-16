@@ -42,6 +42,18 @@ chiude il ricorso — la stessa logica dei cruscotti di settore.
 
 Un ricorso definito da più atti conta una volta (MIN della durata per ricorso).
 
+## Due nozioni di "definitorio" (non confonderle)
+
+| Livello | Flag | Valore 2017-2026 | Usato da |
+|---|---|---|---|
+| atto | `flg_definisce = 'D'` | 704.798 atti | `ga_atti`, `compose/ga-appalti-contenzioso` |
+| ricorso × esito | `esito_definitorio` (codelist) | 772.051 ricorsi | `compose/ga-cross`, `compose/ga-definizioni` |
+
+Le due misure differiscono del 6-11% per anno perché **contano cose diverse**:
+un ricorso può essere chiuso da più atti (e la fonte esiti conta per
+classificazione × esito). Non è un errore e non vanno confrontate 1:1: la prima
+serve a misurare l'attività per atto, la seconda a contare i ricorsi chiusi.
+
 ## Qualità del dato (verificata sul run 2026)
 
 | Controllo | Esito |

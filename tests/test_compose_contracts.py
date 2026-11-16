@@ -82,7 +82,18 @@ def test_appalti_copertura_decisioni() -> None:
     frame = _read(path)
     assert frame["ha_decisione"].isna().sum() == 0, "ha_decisione con NULL"
     share = frame["ha_decisione"].mean()
-    assert 0.85 <= share <= 0.95, f"copertura decisioni fuori range: {share:.1%}"
+    # copertura "ha un atto che definisce" (non "ha un atto"): ~82%
+    assert 0.75 <= share <= 0.90, f"copertura decisioni fuori range: {share:.1%}"
+    # la decisione e' un atto definitorio, non un provvedimento qualsiasi
+    assert (frame["ha_decisione"] == (frame["n_atti_definitori"] > 0)).all(), (
+        "ha_decisione non coincide con n_atti_definitori > 0"
+    )
+    assert (frame["esito_decisione"] == "SENZA DECISIONE").equals(~frame["ha_decisione"]), (
+        "esito_decisione incoerente con ha_decisione"
+    )
+    # la durata esiste dove c'e' una decisione, salvo poche date invertite
+    mismatch = int((frame["ha_decisione"] != frame["durata_giorni"].notna()).sum())
+    assert mismatch <= 5, f"{mismatch} ricorsi con decisione senza durata calcolabile"
 
 
 @pytest.mark.contract

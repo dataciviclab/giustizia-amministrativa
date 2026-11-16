@@ -19,6 +19,11 @@
 -- (+15% nel 2017 -> +32% nel 2026 rispetto al tema ufficiale "per tipo di
 -- decisione") con un bias crescente nel tempo. Il volume escluso resta
 -- visibile in `esiti_interlocutori`, non e' un conteggio di ricorsi distinti.
+--
+-- NOTA TIPO_SEDE: le sedi 31 (CdS CONSULTIVE) e 33 (CGA CONSULTIVE) sono
+-- pareri, non ricorsi giurisdizionali: valgono il 2-4% dei pervenuti annui.
+-- Il flag arriva dalla codelist sedi (tipo_sede) e permette di separarle nei
+-- mart senza cambiarne i totali.
 
 WITH pervenuti_agg AS (
     SELECT
@@ -57,6 +62,12 @@ sentenze_agg AS (
     FROM read_parquet('{support.sentenze_brevi.clean}')
     WHERE classificazione_ricorso IS NOT NULL
     GROUP BY anno, codice_sede, classificazione_ricorso
+),
+sedi AS (
+    SELECT
+        cast_bigint("codice_sede") AS codice_sede,
+        normalize_string("tipo_sede") AS tipo_sede
+    FROM read_csv('{support.sedi.path}', header=true, delim=',')
 )
 SELECT
     COALESCE(p.anno, d.anno, s.anno) AS anno,
@@ -64,6 +75,7 @@ SELECT
     -- nome_sede preferito da pervenuti/definiti/sentenze_brevi (contratto
     -- con spazi); il raw dei pervenuti da OpenGA omette i separatori " - "
     COALESCE(p.nome_sede, d.nome_sede, s.nome_sede) AS nome_sede,
+    COALESCE(sd.tipo_sede, 'giurisdizionale') AS tipo_sede,
     COALESCE(p.classificazione_ricorso, d.classificazione_ricorso, s.classificazione_ricorso) AS classificazione_ricorso,
     COALESCE(p.pervenuti, 0) AS pervenuti,
     COALESCE(d.definiti, 0) AS definiti,
@@ -85,4 +97,6 @@ FULL JOIN sentenze_agg s
     ON COALESCE(p.anno, d.anno) = s.anno
     AND COALESCE(p.codice_sede, d.codice_sede) = s.codice_sede
     AND COALESCE(p.classificazione_ricorso, d.classificazione_ricorso) = s.classificazione_ricorso
+LEFT JOIN sedi sd
+    ON COALESCE(p.codice_sede, d.codice_sede, s.codice_sede) = sd.codice_sede
 ORDER BY anno, pervenuti DESC

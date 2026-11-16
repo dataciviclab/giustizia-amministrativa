@@ -9,6 +9,7 @@
 | Colonna | Note |
 |---|---|
 | `pervenuti` | flusso ingresso per materia/anno (da `ga_ricorsi_pervenuti_class`) |
+| `tipo_sede` | `giurisdizionale` / `consultivo` (sedi 31 e 33 = CdS/CGA CONSULTIVE: pareri, non ricorsi) |
 | `definiti` | chiusure per materia/anno, **solo esiti definitori** (da `ga_ricorsi_definiti`) |
 | `esiti_interlocutori` | volume di provvedimenti interlocutori escluso da `definiti` (non sono ricorsi distinti) |
 | `sentenze` / `sentenze_brevi` / `sentenze_piene` | da `ga_sentenze_brevi` — **al grano materia** |
@@ -73,6 +74,19 @@ Affianca ai flussi per sede/anno il **pendente medio dichiarato**
 - `definisci_su_pendente` — `definiti / pendenti_media`: ~1 significa che
   gli anni di definizione assorbono l'arretrato alla velocita' con cui si
   forma; > 1 = burn-down attivo
+
+## mart_panoramica_tipo_sede — giurisdizionale vs consultivo
+
+Le sedi 31 (CdS CONSULTIVE) e 33 (CGA CONSULTIVE) esprimono **pareri**, non
+ricorsi: valgono il 2-4% dei pervenuti annui e nei totali nazionali di
+`mart_panoramica` sono indistinguibili. Il mart per `tipo_sede` li separa
+(spacca: stesso anno, tassi molto diversi — nel 2025 accoglimento 60,0%
+giurisdizionale contro 23,6% consultivo).
+
+Il flag arriva dalla codelist sedi
+(`datasets/ga-ricorsi-pervenuti-class/data/sedi_canonici.csv`, colonna
+`tipo_sede`), esposta in questo compose come support `file` e non come path
+hardcoded nel SQL.
 
 ## FULL JOIN: righe non appaiate preservate
 

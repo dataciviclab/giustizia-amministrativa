@@ -36,10 +36,6 @@ support:
     name: sentenze_brevi
     config: ../../datasets/ga-sentenze-brevi/dataset.yml
     years: [2026]
-  - type: dataset
-    name: provvedimenti
-    config: ../../datasets/ga-provvedimenti/dataset.yml
-    years: [2026]
   # Stock pendenti per sede/anno — solo marts (nessun uso nel clean:
   # il pendente non ha grano materia). Gap fonte: assente 2017-2019 e 2024.
   - type: dataset
@@ -59,6 +55,7 @@ clean:
     - classificazione_ricorso
     - pervenuti
     - definiti
+    - esiti_interlocutori
     - sentenze
     - sentenze_brevi
     - sentenze_piene

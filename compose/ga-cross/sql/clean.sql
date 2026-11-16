@@ -12,6 +12,13 @@
 -- (tassonomia OpenGA divergente tra file, scarto esploso dal 2022: ~33%).
 -- Le righe solo-definiti/sentenze hanno pervenuti = 0 e
 -- tasso_definizione = NULL (NULLIF).
+--
+-- NOTA DEFINITI: `definiti` somma SOLO gli esiti definitori della codelist
+-- ga-ricorsi-definiti (data/esiti_codelist.csv). La fonte conta i ricorsi per
+-- esito registrato, quindi includere gli interlocutori gonfiava il totale
+-- (+15% nel 2017 -> +32% nel 2026 rispetto al tema ufficiale "per tipo di
+-- decisione") con un bias crescente nel tempo. Il volume escluso resta
+-- visibile in `esiti_interlocutori`, non e' un conteggio di ricorsi distinti.
 
 WITH pervenuti_agg AS (
     SELECT
@@ -30,7 +37,8 @@ definiti_agg AS (
         codice_sede,
         any_value(nome_sede) AS nome_sede,
         classificazione_ricorso,
-        SUM(numero_ricorsi_definiti) AS definiti,
+        SUM(CASE WHEN esito_definitorio THEN numero_ricorsi_definiti ELSE 0 END) AS definiti,
+        SUM(CASE WHEN NOT esito_definitorio THEN numero_ricorsi_definiti ELSE 0 END) AS esiti_interlocutori,
         SUM(CASE WHEN esito_provvedimento = 'ACCOGLIE' THEN numero_ricorsi_definiti ELSE 0 END) AS accoglimenti,
         SUM(CASE WHEN esito_provvedimento = 'RESPINGE' THEN numero_ricorsi_definiti ELSE 0 END) AS rigetti
     FROM read_parquet('{support.definiti.clean}')
@@ -59,6 +67,7 @@ SELECT
     COALESCE(p.classificazione_ricorso, d.classificazione_ricorso, s.classificazione_ricorso) AS classificazione_ricorso,
     COALESCE(p.pervenuti, 0) AS pervenuti,
     COALESCE(d.definiti, 0) AS definiti,
+    COALESCE(d.esiti_interlocutori, 0) AS esiti_interlocutori,
     COALESCE(s.sentenze, 0) AS sentenze,
     COALESCE(s.sentenze_brevi, 0) AS sentenze_brevi,
     COALESCE(s.sentenze_piene, 0) AS sentenze_piene,

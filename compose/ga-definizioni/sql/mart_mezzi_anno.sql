@@ -12,6 +12,7 @@ SELECT
     SUM(sb_sentenze) AS sb_sentenze,
     ROUND(SUM(sb_sentenze_brevi) * 100.0 / NULLIF(SUM(sb_sentenze), 0), 1) AS quota_brevi_pct,
     SUM(rd_definiti) AS rd_definiti,
+    SUM(rd_esiti_interlocutori) AS rd_esiti_interlocutori,
     ROUND(
         SUM(rd_accoglimenti) * 100.0
         / NULLIF(SUM(rd_accoglimenti) + SUM(rd_rigetti), 0),

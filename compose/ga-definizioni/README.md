@@ -23,6 +23,17 @@ Compose complementare a `ga_cross`.
 | `mart_sintesi_sede` | Una riga per sede×anno con mix e contesto |
 | `mart_outlier_sedi` | Sedi con mix anomalo vs media nazionale (delta%) |
 
+## `rd_definiti` — solo esiti definitori
+
+Il contesto esiti arriva da `ga_ricorsi_definiti`, la cui fonte conta i ricorsi
+**per esito registrato**: `rd_definiti` somma solo gli esiti definitori della
+codelist `datasets/ga-ricorsi-definiti/data/esiti_codelist.csv` (stessa regola
+di `ga_cross`). Il volume escluso resta in `rd_esiti_interlocutori`.
+
+Prima di questo filtro `rd_definiti` stava ~+15% (2017) → +32% (2026) sopra
+`totale_definiti` dello stesso compose, pubblicando due misure incompatibili
+dello stesso concetto.
+
 ## Perché non sta in ga_cross
 
 `ga_ricorsi_tipo_decisione` non ha `classificazione_ricorso`. Forzarlo nel cross significherebbe broadcast per materia — lo stesso errore che correggeva `ga_cross` sulle sentenze.

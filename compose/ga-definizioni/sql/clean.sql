@@ -3,6 +3,11 @@
 -- raw_input = ga_ricorsi_tipo_decisione (clean)
 -- support.definiti / support.sentenze_brevi per contesto esiti e mix brevi
 --
+-- NOTA rd_definiti: solo esiti definitori della codelist ga-ricorsi-definiti
+-- (stessa regola di ga_cross). Prima sommava anche gli esiti interlocutori e
+-- pubblicava un totale ~+30% sopra `totale_definiti` dello stesso compose.
+-- rd_esiti_interlocutori espone il volume escluso.
+--
 -- Attenzione: non unire a ga_cross per materia — questo compose non ha
 -- classificazione_ricorso. È il grano giusto per "come lavora ogni sede".
 
@@ -23,7 +28,8 @@ rd AS (
         anno,
         codice_sede,
         any_value(nome_sede) AS nome_sede,
-        SUM(numero_ricorsi_definiti) AS rd_definiti,
+        SUM(CASE WHEN esito_definitorio THEN numero_ricorsi_definiti ELSE 0 END) AS rd_definiti,
+        SUM(CASE WHEN NOT esito_definitorio THEN numero_ricorsi_definiti ELSE 0 END) AS rd_esiti_interlocutori,
         SUM(CASE WHEN esito_provvedimento = 'ACCOGLIE' THEN numero_ricorsi_definiti ELSE 0 END) AS rd_accoglimenti,
         SUM(CASE WHEN esito_provvedimento = 'RESPINGE' THEN numero_ricorsi_definiti ELSE 0 END) AS rd_rigetti
     FROM read_parquet('{support.definiti.clean}')
@@ -52,6 +58,7 @@ SELECT
     ROUND(t.definiti_decreto_decisori * 100.0 / NULLIF(t.totale_definiti, 0), 1) AS decreto_pct,
     ROUND(t.definiti_altri * 100.0 / NULLIF(t.totale_definiti, 0), 1) AS altri_pct,
     COALESCE(r.rd_definiti, 0) AS rd_definiti,
+    COALESCE(r.rd_esiti_interlocutori, 0) AS rd_esiti_interlocutori,
     COALESCE(r.rd_accoglimenti, 0) AS rd_accoglimenti,
     COALESCE(r.rd_rigetti, 0) AS rd_rigetti,
     ROUND(

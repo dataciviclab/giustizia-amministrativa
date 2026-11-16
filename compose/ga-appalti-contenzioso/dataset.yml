@@ -1,0 +1,101 @@
+root: ../../out
+schema_version: 1
+
+dataset:
+  name: ga_appalti_contenzioso
+  source_id: dataciviclab_composite
+  tags: [giustizia, giustizia-amministrativa, appalti, contenzioso, compose]
+  category: giustizia
+  description: "Compose: ricorsi OpenGA in materia di appalti collegati agli atti che li definiscono (esito, durata) e al contesto di gara (settore, importo, stazione appaltante, provincia)."
+  years: [2026]
+  time_coverage:
+    mode: snapshot
+
+# Il ponte che mancava: openga_ricorsi_appalto porta CIG, importo e stazione
+# appaltante di ogni ricorso in materia di appalti; sentenze/decreti/ordinanze
+# portano la decisione. Chiave = (codice_sede, numero_ricorso): il numero
+# ricorso NON e' unico tra sedi (38% di duplicati se usato da solo).
+# Copertura: 26.344 ricorsi su 29.029 (91%) hanno almeno un atto a valle.
+# Eseguire prima: toolkit run per openga-ricorsi-appalto, ga-sentenze,
+# ga-decreti, ga-ordinanze.
+
+raw:
+  output_policy: overwrite
+  sources:
+    - name: appalti
+      type: local_file
+      args:
+        path: "../../out/data/clean/openga_ricorsi_appalto/2026/openga_ricorsi_appalto_2026_clean.parquet"
+        filename: appalti.parquet
+      primary: true
+
+support:
+  - type: dataset
+    name: sentenze
+    config: ../../datasets/ga-sentenze/dataset.yml
+    years: [2026]
+  - type: dataset
+    name: decreti
+    config: ../../datasets/ga-decreti/dataset.yml
+    years: [2026]
+  - type: dataset
+    name: ordinanze
+    config: ../../datasets/ga-ordinanze/dataset.yml
+    years: [2026]
+
+clean:
+  sql: "sql/clean.sql"
+  read:
+    source: config_only
+    mode: latest
+  required_columns:
+    - anno
+    - codice_sede
+    - numero_ricorso
+    - settore
+    - provincia
+    - importo_gara
+    - n_atti
+    - ha_decisione
+    - esito_decisione
+    - durata_giorni
+  validate:
+    not_null:
+      - anno
+      - codice_sede
+      - numero_ricorso
+    min_rows: 1000
+
+mart:
+  tables:
+    - name: mart_esiti_settore
+      sql: "sql/mart_esiti_settore.sql"
+    - name: mart_esiti_provincia
+      sql: "sql/mart_esiti_provincia.sql"
+  required_tables:
+    - mart_esiti_settore
+    - mart_esiti_provincia
+  validate:
+    table_rules:
+      mart_esiti_settore:
+        required_columns:
+          - anno
+          - settore
+          - n_ricorsi
+          - n_con_decisione
+          - tasso_decisione_pct
+        primary_key: [anno, settore]
+        min_rows: 10
+      mart_esiti_provincia:
+        required_columns:
+          - provincia
+          - n_ricorsi
+          - n_con_decisione
+        primary_key: [provincia]
+        min_rows: 10
+
+duckdb:
+  memory_limit: "2GB"
+
+validation:
+  fail_on_error: true

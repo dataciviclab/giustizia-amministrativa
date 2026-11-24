@@ -1,6 +1,6 @@
 {
   "source_id": "openga",
-  "generated_at": "2026-11-16T13:08:39+00:00",
+  "generated_at": "2026-11-23T15:20:23+00:00",
   "report_version": 1,
   "timing": {},
   "identity": {
@@ -10,22 +10,22 @@
     "source_kind": "catalog",
     "observation_mode": "catalog-watch",
     "verdict": "go",
-    "note": "CKAN Giustizia Amministrativa. Il portale e' 10 temi giuridici x ~40 corti/distretti (~400 package) + calendari udienze (~60, non nostri). I nostri 12 dataset curati coprono il 100% dei temi giuridici: items nel catalog = bacino monitorato, non quota usata. Drift utile = package dei nostri temi che spariscono.",
-    "last_probed": "2026-11-16"
+    "note": "CKAN Giustizia Amministrativa: 436 package = 14 temi giuridici x 31 sedi + 2 pareri (consultive), piu' i calendari udienze (fuori perimetro). Copertura del repo: 11 temi su 15 (312 package su 436). Mancano provvedimenti-pubblicati-per-classificazione-ed-esito (issue #11), ricorsi-pervenuti-per-tipologia e ricorsi-per-tipologia-di-provvedimento (issue #12); calendario-udienze escluso per scelta. Items nel catalog = bacino monitorato, non quota usata: drift utile = package di un tema coperto che sparisce.",
+    "last_probed": "2026-11-23"
   },
   "health": {
     "radar_status": "GREEN",
     "http_code": "200",
     "note": null,
     "ssl_fallback": false,
-    "streak": 12
+    "streak": 13
   },
   "inventory": {
     "total_items": 436,
     "active_items": 436,
     "stale_items": 0,
     "method": null,
-    "captured_at": "2026-11-16T13:05:25+00:00",
+    "captured_at": "2026-11-23T15:15:58+00:00",
     "baseline_value": null,
     "baseline_date": null,
     "freshness_hours": 0.1,
@@ -36,7 +36,7 @@
     }
   },
   "source_check": {
-    "last_run": "2026-11-16T13:08:39Z",
+    "last_run": "2026-11-23T15:20:23Z",
     "total_scored": 405,
     "reachable": 405,
     "csv_count": 405,

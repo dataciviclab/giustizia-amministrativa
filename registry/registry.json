@@ -1,19 +1,18 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "repo": "giustizia-amministrativa",
   "source_repo": "dataciviclab/giustizia-amministrativa",
-  "updated_at": "2026-11-16",
+  "updated_at": "2026-11-25",
+  "gcs": {
+    "clean": "year",
+    "prefix": "giustizia-amministrativa/"
+  },
   "datasets": [
     {
       "slug": "ga_appalti_contenzioso",
       "name": "Ga Appalti Contenzioso",
       "description": "Compose: ricorsi OpenGA in materia di appalti collegati agli atti che li definiscono (esito, durata) e al contesto di gara (settore, importo, stazione appaltante, provincia).",
-      "source": "",
       "source_id": "dataciviclab_composite",
-      "period": {
-        "start": 2026,
-        "end": 2026
-      },
       "tags": [
         "giustizia",
         "giustizia-amministrativa",
@@ -22,159 +21,139 @@
         "compose"
       ],
       "category": "giustizia",
+      "period": {
+        "start": 2026,
+        "end": 2026
+      },
+      "partitions": {
+        "2026": 29210
+      },
       "columns": [
         {
           "name": "anno",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "codice_sede",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "nome_sede",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "numero_ricorso",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "ricorso_number"
         },
         {
           "name": "classificazione_ricorso",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "n_cig",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "n_gare",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "n_lotti",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "importo_gara",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "importo_lotti",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "settore",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "provincia",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "province_code"
         },
         {
           "name": "cf_amministrazione_appaltante",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "fiscal_code"
         },
         {
           "name": "denominazione_amministrazione_appaltante",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "data_deposito_ricorso",
           "type": "DATE",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "n_atti",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "n_atti_definitori",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "ha_decisione",
           "type": "BOOLEAN",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "esito_decisione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "data_decisione",
           "type": "DATE",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "durata_giorni",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/giustizia-amministrativa/ga_appalti_contenzioso/2026/ga_appalti_contenzioso_2026_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "ga_appalti_contenzioso__mart_esiti_settore",
         "ga_appalti_contenzioso__mart_esiti_provincia"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T10:07:13.840623+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "ga_atti",
       "name": "Ga Atti",
       "description": "Compose GA: un provvedimento pubblicato per riga (sentenza, ordinanza, decreto, parere) con la durata del ricorso dalla data di deposito alla pubblicazione dell'atto che lo definisce.",
-      "source": "",
       "source_id": "dataciviclab_composite",
-      "period": {
-        "start": 2026,
-        "end": 2026
-      },
       "tags": [
         "giustizia",
         "ga",
@@ -183,147 +162,129 @@
         "durata"
       ],
       "category": "giustizia",
+      "period": {
+        "start": 2026,
+        "end": 2026
+      },
+      "partitions": {
+        "2026": 1108743
+      },
       "columns": [
         {
           "name": "anno",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "codice_sede",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "nome_sede",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipo_atto",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "codice_sezione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "nome_sezione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "numero_provvedimento",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "ricorso_number"
         },
         {
           "name": "numero_ricorso",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "ricorso_number"
         },
         {
           "name": "data_pubblicazione",
           "type": "DATE",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "mese_pubblicazione",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "esito_provvedimento",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "flg_definisce",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "data_deposito_ricorso",
           "type": "DATE",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "oggetto_ricorso",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipo_ricorso",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipo_udienza",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "num_membri_collegio",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "tipo_provvedimento",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "durata_giorni",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/giustizia-amministrativa/ga_atti/2026/ga_atti_2026_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "ga_atti__mart_durata_sede",
         "ga_atti__mart_durata_anno",
         "ga_atti__mart_esiti_per_tipo_atto"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T10:07:14.824753+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "ga_cross",
       "name": "Ga Cross",
       "description": "Compose GA: flusso ricorsi pervenuti → definiti per sede/classificazione/anno. Visione d'insieme della giustizia amministrativa italiana.",
-      "source": "",
       "source_id": "dataciviclab_composite",
-      "period": {
-        "start": 2026,
-        "end": 2026
-      },
       "tags": [
         "giustizia",
         "ga",
@@ -331,263 +292,231 @@
         "cross"
       ],
       "category": "giustizia",
+      "period": {
+        "start": 2026,
+        "end": 2026
+      },
+      "partitions": {
+        "2026": 94683
+      },
       "columns": [
         {
           "name": "anno",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "codice_sede",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "nome_sede",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipo_sede",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "classificazione_ricorso",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "pervenuti",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "definiti",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "esiti_interlocutori",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "sentenze",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "sentenze_brevi",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "sentenze_piene",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "accoglimenti",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "rigetti",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "tasso_definizione",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "tasso_accoglimento",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "quota_sentenze_brevi",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/giustizia-amministrativa/ga_cross/2026/ga_cross_2026_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "ga_cross__mart_panoramica",
         "ga_cross__mart_sede_flusso",
         "ga_cross__mart_esiti",
         "ga_cross__mart_sede_stock",
         "ga_cross__mart_panoramica_tipo_sede"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T10:07:17.629404+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "ga_decreti",
       "name": "Ga Decreti",
-      "description": "",
-      "source": "",
       "source_id": "openga",
-      "period": {
-        "start": 2017,
-        "end": 2026
-      },
       "tags": [
         "giustizia",
         "giustizia-amministrativa",
         "contenzioso"
       ],
       "category": "giustizia",
+      "period": {
+        "start": 2017,
+        "end": 2026
+      },
+      "partitions": {
+        "2026": 274690
+      },
       "columns": [
         {
           "name": "anno",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "codice_sede",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "nome_sede",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "codice_sezione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "nome_sezione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "numero_provvedimento",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "ricorso_number"
         },
         {
           "name": "numero_ricorso",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "ricorso_number"
         },
         {
           "name": "data_pubblicazione",
           "type": "DATE",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "mese_pubblicazione",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "esito_provvedimento",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "flg_definisce",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "data_deposito_ricorso",
           "type": "DATE",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "oggetto_ricorso",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipo_ricorso",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipo_udienza",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "num_membri_collegio",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "tipo_provvedimento",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/giustizia-amministrativa/ga_decreti/2026/ga_decreti_2026_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "ga_decreti__mart_esiti_per_sede",
         "ga_decreti__mart_esiti_per_tipo"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T09:43:24.073205+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "ga_definizioni",
       "name": "Ga Definizioni",
       "description": "Compose GA: come si definiscono i ricorsi per sede/anno — mix sentenza vs decreto decisori vs altri provvedimenti, con contesto esiti (ricorsi_definiti) e mix sentenze brevi. Grano sede×anno, NON materia.",
-      "source": "",
       "source_id": "dataciviclab_composite",
-      "period": {
-        "start": 2026,
-        "end": 2026
-      },
       "tags": [
         "giustizia",
         "ga",
@@ -596,279 +525,243 @@
         "mezzi"
       ],
       "category": "giustizia",
+      "period": {
+        "start": 2026,
+        "end": 2026
+      },
+      "partitions": {
+        "2026": 330
+      },
       "columns": [
         {
           "name": "anno",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "codice_sede",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "nome_sede",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "definiti_sentenza_breve",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "definiti_decreto_decisori",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "definiti_altri",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "totale_definiti",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "sentenza_pct",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "decreto_pct",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "altri_pct",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "rd_definiti",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "rd_esiti_interlocutori",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "rd_accoglimenti",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "rd_rigetti",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "tasso_accoglimento",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "sb_sentenze_brevi",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "sb_sentenze_piene",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "sb_sentenze",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "quota_brevi_pct",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/giustizia-amministrativa/ga_definizioni/2026/ga_definizioni_2026_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "ga_definizioni__mart_mezzi_anno",
         "ga_definizioni__mart_sintesi_sede",
         "ga_definizioni__mart_outlier_sedi"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T10:07:18.730650+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "ga_ordinanze",
       "name": "Ga Ordinanze",
-      "description": "",
-      "source": "",
       "source_id": "openga",
-      "period": {
-        "start": 2017,
-        "end": 2026
-      },
       "tags": [
         "giustizia",
         "giustizia-amministrativa",
         "contenzioso"
       ],
       "category": "giustizia",
+      "period": {
+        "start": 2017,
+        "end": 2026
+      },
+      "partitions": {
+        "2026": 304165
+      },
       "columns": [
         {
           "name": "anno",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "codice_sede",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "nome_sede",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "codice_sezione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "nome_sezione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "numero_provvedimento",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "ricorso_number"
         },
         {
           "name": "numero_ricorso",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "ricorso_number"
         },
         {
           "name": "data_pubblicazione",
           "type": "DATE",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "mese_pubblicazione",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "esito_provvedimento",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "flg_definisce",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "data_deposito_ricorso",
           "type": "DATE",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "oggetto_ricorso",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipo_ricorso",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipo_udienza",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "num_membri_collegio",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "tipo_provvedimento",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/giustizia-amministrativa/ga_ordinanze/2026/ga_ordinanze_2026_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "ga_ordinanze__mart_esiti_per_sede",
         "ga_ordinanze__mart_esiti_per_tipo"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T09:46:16.137837+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "ga_pareri",
       "name": "Ga Pareri",
-      "description": "",
-      "source": "",
       "source_id": "openga",
-      "period": {
-        "start": 2017,
-        "end": 2026
-      },
       "tags": [
         "giustizia",
         "giustizia-amministrativa",
@@ -876,310 +769,275 @@
         "consultivo"
       ],
       "category": "giustizia",
+      "period": {
+        "start": 2017,
+        "end": 2026
+      },
+      "partitions": {
+        "2026": 22993
+      },
       "columns": [
         {
           "name": "anno",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "codice_sede",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "nome_sede",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "codice_sezione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "nome_sezione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "numero_provvedimento",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "ricorso_number"
         },
         {
           "name": "numero_ricorso",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "ricorso_number"
         },
         {
           "name": "data_pubblicazione",
           "type": "DATE",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "mese_pubblicazione",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "esito_provvedimento",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "flg_definisce",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "data_deposito_ricorso",
           "type": "DATE",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "oggetto_ricorso",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipo_ricorso",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipo_udienza",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "num_membri_collegio",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "tipo_provvedimento",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/giustizia-amministrativa/ga_pareri/2026/ga_pareri_2026_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "ga_pareri__mart_esiti_per_sede",
         "ga_pareri__mart_esiti_per_tipo"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T09:49:32.554439+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "ga_provvedimenti",
       "name": "Ga Provvedimenti",
-      "description": "",
-      "source": "",
       "source_id": "openga",
-      "period": {
-        "start": 2017,
-        "end": 2026
-      },
       "tags": [
         "giustizia",
         "giustizia-amministrativa",
         "contenzioso"
       ],
       "category": "giustizia",
+      "period": {
+        "start": 2017,
+        "end": 2026
+      },
+      "partitions": {
+        "2026": 29896
+      },
       "columns": [
         {
           "name": "anno",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "mese",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "month"
         },
         {
           "name": "codice_sede",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "nome_sede",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipo_provvedimento",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "provvedimenti_definiscono",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "provvedimenti_non_definiscono",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "totale_provvedimenti",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "ricorsi_definiti",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "ricorsi_non_definiti",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "totale_ricorsi",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/giustizia-amministrativa/ga_provvedimenti/2026/ga_provvedimenti_2026_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "ga_provvedimenti__mart_produttivita_sede",
         "ga_provvedimenti__mart_trend"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T09:49:48.604203+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "ga_ricorsi_definiti",
       "name": "Ga Ricorsi Definiti",
-      "description": "",
-      "source": "",
       "source_id": "openga",
-      "period": {
-        "start": 2017,
-        "end": 2026
-      },
       "tags": [
         "giustizia",
         "giustizia-amministrativa",
         "contenzioso"
       ],
       "category": "giustizia",
+      "period": {
+        "start": 2017,
+        "end": 2026
+      },
+      "partitions": {
+        "2026": 427040
+      },
       "columns": [
         {
           "name": "anno",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "mese",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "month"
         },
         {
           "name": "codice_sede",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "nome_sede",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "classificazione_ricorso",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "esito_provvedimento",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "numero_ricorsi_definiti",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "esito_definitorio",
           "type": "BOOLEAN",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/giustizia-amministrativa/ga_ricorsi_definiti/2026/ga_ricorsi_definiti_2026_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "ga_ricorsi_definiti__mart_definiti_per_sede",
         "ga_ricorsi_definiti__mart_definiti_per_tipo"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T09:53:56.802078+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "ga_ricorsi_pendenti",
       "name": "Ga Ricorsi Pendenti",
       "description": "Stock mensile dei ricorsi pendenti in giudizio presso le sedi della Giustizia Amministrativa (CdS, CGA Sicilia, TAR, TRGA), per sede e periodo. Fonte OpenGA.",
-      "source": "",
       "source_id": "openga",
-      "period": {
-        "start": 2020,
-        "end": 2026
-      },
       "tags": [
         "giustizia",
         "giustizia-amministrativa",
@@ -1188,127 +1046,116 @@
         "stock"
       ],
       "category": "giustizia",
+      "period": {
+        "start": 2020,
+        "end": 2026
+      },
+      "partitions": {
+        "2026": 2203
+      },
       "columns": [
         {
           "name": "anno",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "mese",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "month"
         },
         {
           "name": "codice_sede",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "nome_sede",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "numero_ricorsi_pendenti",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/giustizia-amministrativa/ga_ricorsi_pendenti/2026/ga_ricorsi_pendenti_2026_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "ga_ricorsi_pendenti__mart_pendenti_per_sede",
         "ga_ricorsi_pendenti__mart_pendenti_nazionale"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T09:56:29.622885+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "ga_ricorsi_pervenuti_class",
       "name": "Ga Ricorsi Pervenuti Class",
-      "description": "",
-      "source": "",
       "source_id": "openga",
-      "period": {
-        "start": 2017,
-        "end": 2026
-      },
       "tags": [
         "giustizia",
         "giustizia-amministrativa",
         "contenzioso"
       ],
       "category": "giustizia",
+      "period": {
+        "start": 2017,
+        "end": 2026
+      },
+      "partitions": {
+        "2026": 207719
+      },
       "columns": [
         {
           "name": "anno",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "anno_mese",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "codice_sede",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "nome_sede",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "classificazione_ricorso",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "numero_ricorsi",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/giustizia-amministrativa/ga_ricorsi_pervenuti_class/2026/ga_ricorsi_pervenuti_class_2026_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "ga_ricorsi_pervenuti_class__mart_pervenuti_per_sede",
         "ga_ricorsi_pervenuti_class__mart_pervenuti_per_tipo"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T09:58:01.804415+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "ga_ricorsi_tipo_decisione",
       "name": "Ga Ricorsi Tipo Decisione",
-      "description": "",
-      "source": "",
       "source_id": "openga",
-      "period": {
-        "start": 2017,
-        "end": 2026
-      },
       "tags": [
         "giustizia",
         "giustizia-amministrativa",
@@ -1316,213 +1163,188 @@
         "definizioni"
       ],
       "category": "giustizia",
+      "period": {
+        "start": 2017,
+        "end": 2026
+      },
+      "partitions": {
+        "2026": 3901
+      },
       "columns": [
         {
           "name": "anno",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "mese",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "month"
         },
         {
           "name": "codice_sede",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "nome_sede",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "definiti_sentenza_breve",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "definiti_decreto_decisori",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "definiti_altri",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "totale_definiti",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/giustizia-amministrativa/ga_ricorsi_tipo_decisione/2026/ga_ricorsi_tipo_decisione_2026_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "ga_ricorsi_tipo_decisione__mart_mezzi_sede",
         "ga_ricorsi_tipo_decisione__mart_trend"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T10:00:18.823088+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "ga_sentenze",
       "name": "Ga Sentenze",
-      "description": "",
-      "source": "",
       "source_id": "openga",
-      "period": {
-        "start": 2017,
-        "end": 2026
-      },
       "tags": [
         "giustizia",
         "giustizia-amministrativa",
         "contenzioso"
       ],
       "category": "giustizia",
+      "period": {
+        "start": 2017,
+        "end": 2026
+      },
+      "partitions": {
+        "2026": 506895
+      },
       "columns": [
         {
           "name": "anno",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "codice_sede",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "nome_sede",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "codice_sezione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "nome_sezione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "numero_provvedimento",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "ricorso_number"
         },
         {
           "name": "numero_ricorso",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "ricorso_number"
         },
         {
           "name": "data_pubblicazione",
           "type": "DATE",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "mese_pubblicazione",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "esito_provvedimento",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "flg_definisce",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "data_deposito_ricorso",
           "type": "DATE",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "oggetto_ricorso",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipo_ricorso",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipo_udienza",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "num_membri_collegio",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "tipo_provvedimento",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/giustizia-amministrativa/ga_sentenze/2026/ga_sentenze_2026_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "ga_sentenze__mart_esiti_per_sede",
         "ga_sentenze__mart_esiti_per_tipo"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T10:04:03.237435+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "ga_sentenze_brevi",
       "name": "Ga Sentenze Brevi",
-      "description": "",
-      "source": "",
       "source_id": "openga",
-      "period": {
-        "start": 2017,
-        "end": 2026
-      },
       "tags": [
         "giustizia",
         "giustizia-amministrativa",
@@ -1530,240 +1352,215 @@
         "sentenze-brevi"
       ],
       "category": "giustizia",
+      "period": {
+        "start": 2017,
+        "end": 2026
+      },
+      "partitions": {
+        "2026": 193740
+      },
       "columns": [
         {
           "name": "anno",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "mese",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "month"
         },
         {
           "name": "codice_sede",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "nome_sede",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "classificazione_ricorso",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "tipo_sentenza",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "numero_sentenze",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/giustizia-amministrativa/ga_sentenze_brevi/2026/ga_sentenze_brevi_2026_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "ga_sentenze_brevi__mart_brevi_per_sede",
         "ga_sentenze_brevi__mart_brevi_per_tipo"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T10:01:50.193520+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     },
     {
       "slug": "openga_ricorsi_appalto",
       "name": "Openga Ricorsi Appalto",
-      "description": "",
-      "source": "",
       "source_id": "openga",
-      "period": {
-        "start": 2018,
-        "end": 2026
-      },
       "tags": [
         "giustizia",
         "giustizia-amministrativa",
         "contenzioso"
       ],
       "category": "giustizia",
+      "period": {
+        "start": 2018,
+        "end": 2026
+      },
+      "partitions": {
+        "2026": 35323
+      },
       "columns": [
         {
           "name": "anno",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "year"
         },
         {
           "name": "codice_sede",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "nome_sede",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "codice_sezione",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "nome_sezione",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "numero_ricorso",
           "type": "BIGINT",
           "role": "dimension",
-          "description": "",
           "semantic_type": "ricorso_number"
         },
         {
           "name": "data_deposito_ricorso",
           "type": "DATE",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "classificazione_ricorso",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "codice_cig",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "cig_code"
         },
         {
           "name": "codice_accordo_quadro",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "numero_gara",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "oggetto_gara",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "importo_complessivo_gara",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "numero_lotti_componenti",
           "type": "BIGINT",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "oggetto_lotto",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "importo_lotto",
           "type": "DOUBLE",
-          "role": "metric",
-          "description": ""
+          "role": "metric"
         },
         {
           "name": "stato_gara",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "settore",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "luogo_istat",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "provincia",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "province_code"
         },
         {
           "name": "data_pubblicazione",
           "type": "DATE",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "data_scadenza_offerta",
           "type": "DATE",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         },
         {
           "name": "cf_amministrazione_appaltante",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": "",
           "semantic_type": "fiscal_code"
         },
         {
           "name": "denominazione_amministrazione_appaltante",
           "type": "VARCHAR",
-          "role": "dimension",
-          "description": ""
+          "role": "dimension"
         }
       ],
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-clean/giustizia-amministrativa/openga_ricorsi_appalto/2026/openga_ricorsi_appalto_2026_clean.parquet",
-        "multi_file": false
-      },
-      "stage": "incubating",
       "mart_refs": [
         "openga_ricorsi_appalto__mart_ricorsi_sede_classificazione",
         "openga_ricorsi_appalto__mart_ricorsi_territorio_settore"
-      ]
+      ],
+      "last_run": {
+        "at": "2026-11-25T09:51:45.429275+00:00",
+        "year": 2026,
+        "status": "SUCCESS"
+      }
     }
   ],
   "marts": [
@@ -1771,1102 +1568,389 @@
       "slug": "ga_appalti_contenzioso__mart_esiti_provincia",
       "dataset": "ga_appalti_contenzioso",
       "table": "mart_esiti_provincia",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_appalti_contenzioso/2026/mart_esiti_provincia.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "provincia"
+      ]
     },
     {
       "slug": "ga_appalti_contenzioso__mart_esiti_settore",
       "dataset": "ga_appalti_contenzioso",
       "table": "mart_esiti_settore",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_appalti_contenzioso/2026/mart_esiti_settore.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "settore"
+      ]
     },
     {
       "slug": "ga_atti__mart_durata_anno",
       "dataset": "ga_atti",
       "table": "mart_durata_anno",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_atti/2026/mart_durata_anno.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "tipo_atto"
+      ]
     },
     {
       "slug": "ga_atti__mart_durata_sede",
       "dataset": "ga_atti",
       "table": "mart_durata_sede",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_atti/2026/mart_durata_sede.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "codice_sede",
+        "tipo_atto"
+      ]
     },
     {
       "slug": "ga_atti__mart_esiti_per_tipo_atto",
       "dataset": "ga_atti",
       "table": "mart_esiti_per_tipo_atto",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_atti/2026/mart_esiti_per_tipo_atto.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "tipo_atto",
+        "esito_provvedimento"
+      ]
     },
     {
       "slug": "ga_cross__mart_esiti",
       "dataset": "ga_cross",
       "table": "mart_esiti",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_cross/2026/mart_esiti.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026
     },
     {
       "slug": "ga_cross__mart_panoramica",
       "dataset": "ga_cross",
       "table": "mart_panoramica",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_cross/2026/mart_panoramica.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026
     },
     {
       "slug": "ga_cross__mart_panoramica_tipo_sede",
       "dataset": "ga_cross",
       "table": "mart_panoramica_tipo_sede",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_cross/2026/mart_panoramica_tipo_sede.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "tipo_sede"
+      ]
     },
     {
       "slug": "ga_cross__mart_sede_flusso",
       "dataset": "ga_cross",
       "table": "mart_sede_flusso",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_cross/2026/mart_sede_flusso.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026
     },
     {
       "slug": "ga_cross__mart_sede_stock",
       "dataset": "ga_cross",
       "table": "mart_sede_stock",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_cross/2026/mart_sede_stock.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026
     },
     {
       "slug": "ga_decreti__mart_esiti_per_sede",
       "dataset": "ga_decreti",
       "table": "mart_esiti_per_sede",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_decreti/2026/mart_esiti_per_sede.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "codice_sede",
+        "nome_sede",
+        "esito_provvedimento"
+      ]
     },
     {
       "slug": "ga_decreti__mart_esiti_per_tipo",
       "dataset": "ga_decreti",
       "table": "mart_esiti_per_tipo",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_decreti/2026/mart_esiti_per_tipo.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "tipo_ricorso",
+        "esito_provvedimento"
+      ]
     },
     {
       "slug": "ga_definizioni__mart_mezzi_anno",
       "dataset": "ga_definizioni",
       "table": "mart_mezzi_anno",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_definizioni/2026/mart_mezzi_anno.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno"
+      ]
     },
     {
       "slug": "ga_definizioni__mart_outlier_sedi",
       "dataset": "ga_definizioni",
       "table": "mart_outlier_sedi",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_definizioni/2026/mart_outlier_sedi.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026
     },
     {
       "slug": "ga_definizioni__mart_sintesi_sede",
       "dataset": "ga_definizioni",
       "table": "mart_sintesi_sede",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_definizioni/2026/mart_sintesi_sede.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "codice_sede"
+      ]
     },
     {
       "slug": "ga_ordinanze__mart_esiti_per_sede",
       "dataset": "ga_ordinanze",
       "table": "mart_esiti_per_sede",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_ordinanze/2026/mart_esiti_per_sede.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "codice_sede",
+        "nome_sede",
+        "esito_provvedimento"
+      ]
     },
     {
       "slug": "ga_ordinanze__mart_esiti_per_tipo",
       "dataset": "ga_ordinanze",
       "table": "mart_esiti_per_tipo",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_ordinanze/2026/mart_esiti_per_tipo.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "tipo_ricorso",
+        "esito_provvedimento"
+      ]
     },
     {
       "slug": "ga_pareri__mart_esiti_per_sede",
       "dataset": "ga_pareri",
       "table": "mart_esiti_per_sede",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_pareri/2026/mart_esiti_per_sede.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "codice_sede",
+        "nome_sede",
+        "esito_provvedimento"
+      ]
     },
     {
       "slug": "ga_pareri__mart_esiti_per_tipo",
       "dataset": "ga_pareri",
       "table": "mart_esiti_per_tipo",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_pareri/2026/mart_esiti_per_tipo.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "tipo_provvedimento",
+        "esito_provvedimento"
+      ]
     },
     {
       "slug": "ga_provvedimenti__mart_produttivita_sede",
       "dataset": "ga_provvedimenti",
       "table": "mart_produttivita_sede",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_provvedimenti/2026/mart_produttivita_sede.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "codice_sede",
+        "nome_sede"
+      ]
     },
     {
       "slug": "ga_provvedimenti__mart_trend",
       "dataset": "ga_provvedimenti",
       "table": "mart_trend",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_provvedimenti/2026/mart_trend.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno"
+      ]
     },
     {
       "slug": "ga_ricorsi_definiti__mart_definiti_per_sede",
       "dataset": "ga_ricorsi_definiti",
       "table": "mart_definiti_per_sede",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_ricorsi_definiti/2026/mart_definiti_per_sede.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "codice_sede",
+        "nome_sede",
+        "esito_provvedimento"
+      ]
     },
     {
       "slug": "ga_ricorsi_definiti__mart_definiti_per_tipo",
       "dataset": "ga_ricorsi_definiti",
       "table": "mart_definiti_per_tipo",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_ricorsi_definiti/2026/mart_definiti_per_tipo.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "classificazione_ricorso",
+        "esito_provvedimento"
+      ]
     },
     {
       "slug": "ga_ricorsi_pendenti__mart_pendenti_nazionale",
       "dataset": "ga_ricorsi_pendenti",
       "table": "mart_pendenti_nazionale",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_ricorsi_pendenti/2026/mart_pendenti_nazionale.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno"
+      ]
     },
     {
       "slug": "ga_ricorsi_pendenti__mart_pendenti_per_sede",
       "dataset": "ga_ricorsi_pendenti",
       "table": "mart_pendenti_per_sede",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_ricorsi_pendenti/2026/mart_pendenti_per_sede.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "codice_sede"
+      ]
     },
     {
       "slug": "ga_ricorsi_pervenuti_class__mart_pervenuti_per_sede",
       "dataset": "ga_ricorsi_pervenuti_class",
       "table": "mart_pervenuti_per_sede",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_ricorsi_pervenuti_class/2026/mart_pervenuti_per_sede.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "codice_sede",
+        "nome_sede"
+      ]
     },
     {
       "slug": "ga_ricorsi_pervenuti_class__mart_pervenuti_per_tipo",
       "dataset": "ga_ricorsi_pervenuti_class",
       "table": "mart_pervenuti_per_tipo",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_ricorsi_pervenuti_class/2026/mart_pervenuti_per_tipo.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "classificazione_ricorso"
+      ]
     },
     {
       "slug": "ga_ricorsi_tipo_decisione__mart_mezzi_sede",
       "dataset": "ga_ricorsi_tipo_decisione",
       "table": "mart_mezzi_sede",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_ricorsi_tipo_decisione/2026/mart_mezzi_sede.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "codice_sede",
+        "nome_sede"
+      ]
     },
     {
       "slug": "ga_ricorsi_tipo_decisione__mart_trend",
       "dataset": "ga_ricorsi_tipo_decisione",
       "table": "mart_trend",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_ricorsi_tipo_decisione/2026/mart_trend.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno"
+      ]
     },
     {
       "slug": "ga_sentenze__mart_esiti_per_sede",
       "dataset": "ga_sentenze",
       "table": "mart_esiti_per_sede",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_sentenze/2026/mart_esiti_per_sede.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "codice_sede",
+        "nome_sede",
+        "esito_provvedimento"
+      ]
     },
     {
       "slug": "ga_sentenze__mart_esiti_per_tipo",
       "dataset": "ga_sentenze",
       "table": "mart_esiti_per_tipo",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_sentenze/2026/mart_esiti_per_tipo.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "tipo_ricorso",
+        "esito_provvedimento"
+      ]
     },
     {
       "slug": "ga_sentenze_brevi__mart_brevi_per_sede",
       "dataset": "ga_sentenze_brevi",
       "table": "mart_brevi_per_sede",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_sentenze_brevi/2026/mart_brevi_per_sede.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "codice_sede",
+        "nome_sede",
+        "tipo_sentenza"
+      ]
     },
     {
       "slug": "ga_sentenze_brevi__mart_brevi_per_tipo",
       "dataset": "ga_sentenze_brevi",
       "table": "mart_brevi_per_tipo",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/ga_sentenze_brevi/2026/mart_brevi_per_tipo.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "classificazione_ricorso",
+        "tipo_sentenza"
+      ]
     },
     {
       "slug": "openga_ricorsi_appalto__mart_ricorsi_sede_classificazione",
       "dataset": "openga_ricorsi_appalto",
       "table": "mart_ricorsi_sede_classificazione",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/openga_ricorsi_appalto/2026/mart_ricorsi_sede_classificazione.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "codice_sede",
+        "nome_sede",
+        "classificazione_ricorso"
+      ]
     },
     {
       "slug": "openga_ricorsi_appalto__mart_ricorsi_territorio_settore",
       "dataset": "openga_ricorsi_appalto",
       "table": "mart_ricorsi_territorio_settore",
-      "location": {
-        "type": "gcs",
-        "path": "gs://dataciviclab-mart/giustizia-amministrativa/openga_ricorsi_appalto/2026/mart_ricorsi_territorio_settore.parquet",
-        "multi_file": false
-      }
+      "layout": "year",
+      "year": 2026,
+      "primary_key": [
+        "anno",
+        "provincia",
+        "settore"
+      ]
     }
   ],
-  "signals": [
-    {
-      "id": "compose:ga_appalti_contenzioso",
-      "source_id": "dataciviclab_composite",
-      "status": "ok",
-      "label": "ga_appalti_contenzioso",
-      "detail": "anno 2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261116T193725Z_d7901b7a",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 95,
-          "mart": 100
-        },
-        "output_rows": {
-          "clean": 29029,
-          "mart": 138
-        },
-        "output_bytes": {
-          "raw": 2231691,
-          "clean": 576224,
-          "mart": 6684
-        },
-        "started_at": "2026-11-16T19:37:25.332116+00:00",
-        "finished_at": "2026-11-16T19:37:25.597353+00:00",
-        "duration_seconds": 0.265
-      }
-    },
-    {
-      "id": "compose:ga_atti",
-      "source_id": "dataciviclab_composite",
-      "status": "ok",
-      "label": "ga_atti",
-      "detail": "anno 2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261116T193725Z_3a8fbb6a",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "clean": 1099522,
-          "mart": 3121
-        },
-        "output_bytes": {
-          "raw": 23543926,
-          "clean": 50362248,
-          "mart": 25452
-        },
-        "started_at": "2026-11-16T19:37:25.931367+00:00",
-        "finished_at": "2026-11-16T19:37:27.376691+00:00",
-        "duration_seconds": 1.445
-      }
-    },
-    {
-      "id": "compose:ga_cross",
-      "source_id": "dataciviclab_composite",
-      "status": "ok",
-      "label": "ga_cross",
-      "detail": "anno 2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261116T193727Z_090afe11",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "clean": 94329,
-          "mart": 12163
-        },
-        "output_bytes": {
-          "raw": 662147,
-          "clean": 699127,
-          "mart": 178710
-        },
-        "started_at": "2026-11-16T19:37:27.775852+00:00",
-        "finished_at": "2026-11-16T19:37:28.132921+00:00",
-        "duration_seconds": 0.357
-      }
-    },
-    {
-      "id": "compose:ga_definizioni",
-      "source_id": "dataciviclab_composite",
-      "status": "ok",
-      "label": "ga_definizioni",
-      "detail": "anno 2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261116T193728Z_c71d128a",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "clean": 330,
-          "mart": 601
-        },
-        "output_bytes": {
-          "raw": 26675,
-          "clean": 16316,
-          "mart": 27798
-        },
-        "started_at": "2026-11-16T19:37:28.472317+00:00",
-        "finished_at": "2026-11-16T19:37:28.581632+00:00",
-        "duration_seconds": 0.109
-      }
-    },
-    {
-      "id": "ga_decreti",
-      "source_id": "openga",
-      "status": "ok",
-      "label": "ga_decreti",
-      "detail": "anno 2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261116T191752Z_8d5b724d",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "raw": 273418,
-          "clean": 273418,
-          "mart": 8904
-        },
-        "output_bytes": {
-          "raw": 91631510,
-          "clean": 11682919,
-          "mart": 35607
-        },
-        "started_at": "2026-11-16T19:17:52.473117+00:00",
-        "finished_at": "2026-11-16T19:20:15.908958+00:00",
-        "duration_seconds": 143.436
-      }
-    },
-    {
-      "id": "ga_ordinanze",
-      "source_id": "openga",
-      "status": "ok",
-      "label": "ga_ordinanze",
-      "detail": "anno 2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261116T192016Z_687d452e",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "raw": 301580,
-          "clean": 301580,
-          "mart": 12408
-        },
-        "output_bytes": {
-          "raw": 105769758,
-          "clean": 13025257,
-          "mart": 44403
-        },
-        "started_at": "2026-11-16T19:20:16.293614+00:00",
-        "finished_at": "2026-11-16T19:22:26.213330+00:00",
-        "duration_seconds": 129.92
-      }
-    },
-    {
-      "id": "ga_pareri",
-      "source_id": "openga",
-      "status": "ok",
-      "label": "ga_pareri",
-      "detail": "anno 2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261116T192226Z_428f3a8b",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "raw": 22993,
-          "clean": 22993,
-          "mart": 954
-        },
-        "output_bytes": {
-          "raw": 6050142,
-          "clean": 774565,
-          "mart": 6889
-        },
-        "started_at": "2026-11-16T19:22:26.577106+00:00",
-        "finished_at": "2026-11-16T19:22:37.513846+00:00",
-        "duration_seconds": 10.937
-      }
-    },
-    {
-      "id": "ga_provvedimenti",
-      "source_id": "openga",
-      "status": "ok",
-      "label": "ga_provvedimenti",
-      "detail": "anno 2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261116T192237Z_842f55df",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "raw": 29676,
-          "clean": 29676,
-          "mart": 340
-        },
-        "output_bytes": {
-          "raw": 2178467,
-          "clean": 196025,
-          "mart": 6596
-        },
-        "started_at": "2026-11-16T19:22:37.918680+00:00",
-        "finished_at": "2026-11-16T19:24:17.116554+00:00",
-        "duration_seconds": 99.198
-      }
-    },
-    {
-      "id": "openga_ricorsi_appalto",
-      "source_id": "openga",
-      "status": "ok",
-      "label": "openga_ricorsi_appalto",
-      "detail": "anno 2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261116T192417Z_8732f46a",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "raw": 35116,
-          "clean": 35116,
-          "mart": 6264
-        },
-        "output_bytes": {
-          "raw": 14400620,
-          "clean": 2231691,
-          "mart": 24781
-        },
-        "started_at": "2026-11-16T19:24:17.475947+00:00",
-        "finished_at": "2026-11-16T19:26:01.675461+00:00",
-        "duration_seconds": 104.2
-      }
-    },
-    {
-      "id": "ga_ricorsi_definiti",
-      "source_id": "openga",
-      "status": "ok",
-      "label": "ga_ricorsi_definiti",
-      "detail": "anno 2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261116T192602Z_f39151f7",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "raw": 423463,
-          "clean": 423463,
-          "mart": 87977
-        },
-        "output_bytes": {
-          "raw": 44787277,
-          "clean": 1265035,
-          "mart": 170270
-        },
-        "started_at": "2026-11-16T19:26:02.007877+00:00",
-        "finished_at": "2026-11-16T19:28:11.518665+00:00",
-        "duration_seconds": 129.511
-      }
-    },
-    {
-      "id": "ga_ricorsi_pendenti",
-      "source_id": "openga",
-      "status": "ok",
-      "label": "ga_ricorsi_pendenti",
-      "detail": "anno 2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261116T192811Z_37e976f7",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "raw": 2178,
-          "clean": 2178,
-          "mart": 204
-        },
-        "output_bytes": {
-          "raw": 54581,
-          "clean": 7954,
-          "mart": 4930
-        },
-        "started_at": "2026-11-16T19:28:11.830970+00:00",
-        "finished_at": "2026-11-16T19:29:29.837886+00:00",
-        "duration_seconds": 78.007
-      }
-    },
-    {
-      "id": "ga_ricorsi_pervenuti_class",
-      "source_id": "openga",
-      "status": "ok",
-      "label": "ga_ricorsi_pervenuti_class",
-      "detail": "anno 2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261116T192930Z_e507c5a5",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "raw": 205881,
-          "clean": 205881,
-          "mart": 9838
-        },
-        "output_bytes": {
-          "raw": 16098652,
-          "clean": 662147,
-          "mart": 41822
-        },
-        "started_at": "2026-11-16T19:29:30.149414+00:00",
-        "finished_at": "2026-11-16T19:31:29.449498+00:00",
-        "duration_seconds": 119.3
-      }
-    },
-    {
-      "id": "ga_ricorsi_tipo_decisione",
-      "source_id": "openga",
-      "status": "ok",
-      "label": "ga_ricorsi_tipo_decisione",
-      "detail": "anno 2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261116T193129Z_54b086f5",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "raw": 3874,
-          "clean": 3874,
-          "mart": 340
-        },
-        "output_bytes": {
-          "raw": 205143,
-          "clean": 26675,
-          "mart": 7536
-        },
-        "started_at": "2026-11-16T19:31:29.782036+00:00",
-        "finished_at": "2026-11-16T19:32:55.999306+00:00",
-        "duration_seconds": 86.217
-      }
-    },
-    {
-      "id": "ga_sentenze",
-      "source_id": "openga",
-      "status": "ok",
-      "label": "ga_sentenze",
-      "detail": "anno 2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261116T193503Z_ee814242",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "raw": 501531,
-          "clean": 501531,
-          "mart": 13199
-        },
-        "output_bytes": {
-          "raw": 167127916,
-          "clean": 23543926,
-          "mart": 50589
-        },
-        "started_at": "2026-11-16T19:35:03.571398+00:00",
-        "finished_at": "2026-11-16T19:37:24.977771+00:00",
-        "duration_seconds": 141.406
-      }
-    },
-    {
-      "id": "ga_sentenze_brevi",
-      "source_id": "openga",
-      "status": "ok",
-      "label": "ga_sentenze_brevi",
-      "detail": "anno 2026 — mart: si",
-      "action": "",
-      "run": {
-        "run_id": "20261116T193256Z_c274813b",
-        "year": 2026,
-        "status": "SUCCESS",
-        "quality_score": {
-          "raw": 100,
-          "clean": 100,
-          "mart": 100
-        },
-        "output_rows": {
-          "raw": 191955,
-          "clean": 191955,
-          "mart": 14834
-        },
-        "output_bytes": {
-          "raw": 18412961,
-          "clean": 549274,
-          "mart": 55497
-        },
-        "started_at": "2026-11-16T19:32:56.358340+00:00",
-        "finished_at": "2026-11-16T19:35:03.255848+00:00",
-        "duration_seconds": 126.898
-      }
-    }
-  ],
-  "codelists": [],
-  "entities": {
-    "entities": {
-      "Ente (o Impresa)": {
-        "entity": "Ente (o Impresa)",
-        "label": "Ente (o Impresa)",
-        "datasets": [
-          {
-            "slug": "ga_appalti_contenzioso",
-            "name": "Ga Appalti Contenzioso",
-            "column": "cf_amministrazione_appaltante",
-            "semantic_type": "fiscal_code"
-          },
-          {
-            "slug": "openga_ricorsi_appalto",
-            "name": "Openga Ricorsi Appalto",
-            "column": "cf_amministrazione_appaltante",
-            "semantic_type": "fiscal_code"
-          }
-        ],
-        "types": {
-          "fiscal_code": 2
-        }
-      },
-      "Gara": {
-        "entity": "Gara",
-        "label": "Gara / Appalto",
-        "datasets": [
-          {
-            "slug": "openga_ricorsi_appalto",
-            "name": "Openga Ricorsi Appalto",
-            "column": "codice_cig",
-            "semantic_type": "cig_code"
-          }
-        ],
-        "types": {
-          "cig_code": 1
-        }
-      },
-      "Procedimento": {
-        "entity": "Procedimento",
-        "label": "Procedimento giudiziario",
-        "datasets": [
-          {
-            "slug": "ga_appalti_contenzioso",
-            "name": "Ga Appalti Contenzioso",
-            "column": "numero_ricorso",
-            "semantic_type": "ricorso_number"
-          },
-          {
-            "slug": "ga_atti",
-            "name": "Ga Atti",
-            "column": "numero_provvedimento",
-            "semantic_type": "ricorso_number"
-          },
-          {
-            "slug": "ga_atti",
-            "name": "Ga Atti",
-            "column": "numero_ricorso",
-            "semantic_type": "ricorso_number"
-          },
-          {
-            "slug": "ga_decreti",
-            "name": "Ga Decreti",
-            "column": "numero_provvedimento",
-            "semantic_type": "ricorso_number"
-          },
-          {
-            "slug": "ga_decreti",
-            "name": "Ga Decreti",
-            "column": "numero_ricorso",
-            "semantic_type": "ricorso_number"
-          },
-          {
-            "slug": "ga_ordinanze",
-            "name": "Ga Ordinanze",
-            "column": "numero_provvedimento",
-            "semantic_type": "ricorso_number"
-          },
-          {
-            "slug": "ga_ordinanze",
-            "name": "Ga Ordinanze",
-            "column": "numero_ricorso",
-            "semantic_type": "ricorso_number"
-          },
-          {
-            "slug": "ga_pareri",
-            "name": "Ga Pareri",
-            "column": "numero_provvedimento",
-            "semantic_type": "ricorso_number"
-          },
-          {
-            "slug": "ga_pareri",
-            "name": "Ga Pareri",
-            "column": "numero_ricorso",
-            "semantic_type": "ricorso_number"
-          },
-          {
-            "slug": "ga_sentenze",
-            "name": "Ga Sentenze",
-            "column": "numero_provvedimento",
-            "semantic_type": "ricorso_number"
-          },
-          {
-            "slug": "ga_sentenze",
-            "name": "Ga Sentenze",
-            "column": "numero_ricorso",
-            "semantic_type": "ricorso_number"
-          },
-          {
-            "slug": "openga_ricorsi_appalto",
-            "name": "Openga Ricorsi Appalto",
-            "column": "numero_ricorso",
-            "semantic_type": "ricorso_number"
-          }
-        ],
-        "types": {
-          "ricorso_number": 12
-        }
-      },
-      "Provincia": {
-        "entity": "Provincia",
-        "label": "Provincia",
-        "datasets": [
-          {
-            "slug": "ga_appalti_contenzioso",
-            "name": "Ga Appalti Contenzioso",
-            "column": "provincia",
-            "semantic_type": "province_code"
-          },
-          {
-            "slug": "openga_ricorsi_appalto",
-            "name": "Openga Ricorsi Appalto",
-            "column": "provincia",
-            "semantic_type": "province_code"
-          }
-        ],
-        "types": {
-          "province_code": 2
-        }
-      },
-      "Tempo": {
-        "entity": "Tempo",
-        "label": "Tempo / data",
-        "datasets": [
-          {
-            "slug": "ga_appalti_contenzioso",
-            "name": "Ga Appalti Contenzioso",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "ga_atti",
-            "name": "Ga Atti",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "ga_cross",
-            "name": "Ga Cross",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "ga_decreti",
-            "name": "Ga Decreti",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "ga_definizioni",
-            "name": "Ga Definizioni",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "ga_ordinanze",
-            "name": "Ga Ordinanze",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "ga_pareri",
-            "name": "Ga Pareri",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "ga_provvedimenti",
-            "name": "Ga Provvedimenti",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "ga_provvedimenti",
-            "name": "Ga Provvedimenti",
-            "column": "mese",
-            "semantic_type": "month"
-          },
-          {
-            "slug": "ga_ricorsi_definiti",
-            "name": "Ga Ricorsi Definiti",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "ga_ricorsi_definiti",
-            "name": "Ga Ricorsi Definiti",
-            "column": "mese",
-            "semantic_type": "month"
-          },
-          {
-            "slug": "ga_ricorsi_pendenti",
-            "name": "Ga Ricorsi Pendenti",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "ga_ricorsi_pendenti",
-            "name": "Ga Ricorsi Pendenti",
-            "column": "mese",
-            "semantic_type": "month"
-          },
-          {
-            "slug": "ga_ricorsi_pervenuti_class",
-            "name": "Ga Ricorsi Pervenuti Class",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "ga_ricorsi_tipo_decisione",
-            "name": "Ga Ricorsi Tipo Decisione",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "ga_ricorsi_tipo_decisione",
-            "name": "Ga Ricorsi Tipo Decisione",
-            "column": "mese",
-            "semantic_type": "month"
-          },
-          {
-            "slug": "ga_sentenze",
-            "name": "Ga Sentenze",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "ga_sentenze_brevi",
-            "name": "Ga Sentenze Brevi",
-            "column": "anno",
-            "semantic_type": "year"
-          },
-          {
-            "slug": "ga_sentenze_brevi",
-            "name": "Ga Sentenze Brevi",
-            "column": "mese",
-            "semantic_type": "month"
-          },
-          {
-            "slug": "openga_ricorsi_appalto",
-            "name": "Openga Ricorsi Appalto",
-            "column": "anno",
-            "semantic_type": "year"
-          }
-        ],
-        "types": {
-          "year": 15,
-          "month": 5
-        }
-      }
-    },
-    "bridges": [
-      {
-        "from": {
-          "entity": "Gara",
-          "dataset": "openga_ricorsi_appalto",
-          "via": "cig_code"
-        },
-        "to": {
-          "entity": "Comune",
-          "bridge": "anac_bandi_gara",
-          "on": "cig",
-          "semantic_type": "municipality_code"
-        }
-      }
-    ]
-  }
+  "checks": [],
+  "codelists": []
 }
